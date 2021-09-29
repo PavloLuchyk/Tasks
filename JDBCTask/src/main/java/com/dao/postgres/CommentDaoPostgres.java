@@ -1,5 +1,6 @@
 package com.dao.postgres;
 
+import com.dao.CommentDao;
 import com.dao.CrudDao;
 import com.entities.Advertisement;
 import com.entities.Comment;
@@ -9,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentDaoPostgres implements CrudDao<Comment> {
+public class CommentDaoPostgres implements CommentDao {
 
     private final Connection con;
     private static final String CREATE_SQL =
@@ -133,5 +134,10 @@ public class CommentDaoPostgres implements CrudDao<Comment> {
             }
         }
         throw new NullPointerException("Null value cannot be removed");
+    }
+
+    @Override
+    public List<Comment> getAllCommentsByUserId(long userId) {
+        return null;
     }
 }
