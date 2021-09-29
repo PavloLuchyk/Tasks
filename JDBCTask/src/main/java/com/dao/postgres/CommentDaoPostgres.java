@@ -1,7 +1,6 @@
 package com.dao.postgres;
 
 import com.dao.CommentDao;
-import com.dao.CrudDao;
 import com.entities.Advertisement;
 import com.entities.Comment;
 import com.entities.User;
@@ -39,6 +38,17 @@ public class CommentDaoPostgres implements CommentDao {
                     ") as advertisements1 " +
                     "on comments.advertismentid = advertisements1.id" +
                     " where comments.id = ?;";
+    private static final String SELECT_BY_USER_ID_SQL =
+            "select comments.*, users.fullname, users.password, advertisements1.*  " +
+                    "from comments " +
+                    "inner join users on comments.userid = users.id " +
+                    "inner join ( " +
+                    " select advertisements.*, users.fullname, users.password " +
+                    " from advertisements inner join users on advertisements.userid = users.id " +
+                    ") as advertisements1 " +
+                    "on comments.advertismentid = advertisements1.id" +
+                    " where comments.userid = ? " +
+                    "order by comments.creationdate desc;";
 
     public CommentDaoPostgres(Connection con) {
         this.con = con;
@@ -137,7 +147,16 @@ public class CommentDaoPostgres implements CommentDao {
     }
 
     @Override
-    public List<Comment> getAllCommentsByUserId(long userId) {
-        return null;
+    public List<Comment> getAllCommentsByUserId(long userId) throws SQLException{
+        List<Comment> comments = new ArrayList<>();
+        try (PreparedStatement preparedStatement = con.prepareStatement(SELECT_BY_USER_ID_SQL)) {
+            preparedStatement.setLong(1, userId);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    comments.add(getCommentFromResultSet(rs));
+                }
+            }
+        }
+        return comments;
     }
 }
