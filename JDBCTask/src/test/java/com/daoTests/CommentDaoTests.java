@@ -3,6 +3,7 @@ package com.daoTests;
 import com.dao.CommentDao;
 import com.dao.CrudDao;
 import com.dao.DataSource;
+import com.dao.SortingOrder;
 import com.dao.postgres.AdvertisementDaoPostgres;
 import com.dao.postgres.CommentDaoPostgres;
 import com.dao.postgres.UserDaoPostgres;
@@ -74,7 +75,7 @@ public class CommentDaoTests {
         expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text", user, advertisement)));
         expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text2", user, advertisement)));
         expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text3", user, advertisement)));
-        List<Comment> actual = commentDao.getAllCommentsByUserId(user.getId());
+        List<Comment> actual = commentDao.getAllCommentsByUserId(user.getId(), SortingOrder.ASC);
         assertEquals(expected, actual);
     }
 }

@@ -1,6 +1,7 @@
 package com.dao.postgres;
 
 import com.dao.CommentDao;
+import com.dao.SortingOrder;
 import com.entities.Advertisement;
 import com.entities.Comment;
 import com.entities.User;
@@ -48,7 +49,7 @@ public class CommentDaoPostgres implements CommentDao {
                     ") as advertisements1 " +
                     "on comments.advertismentid = advertisements1.id " +
                     "where comments.userid = ? " +
-                    "order by comments.creationdate desc;";
+                    "order by comments.creationdate ";
 
     public CommentDaoPostgres(Connection con) {
         this.con = con;
@@ -154,9 +155,10 @@ public class CommentDaoPostgres implements CommentDao {
     }
 
     @Override
-    public List<Comment> getAllCommentsByUserId(long userId) throws SQLException{
+    public List<Comment> getAllCommentsByUserId(long userId, SortingOrder order) throws SQLException{
         List<Comment> comments = new ArrayList<>();
-        try (PreparedStatement preparedStatement = con.prepareStatement(SELECT_BY_USER_ID_SQL)) {
+        String newSQL = SELECT_BY_USER_ID_SQL + order.toString() +";";
+        try (PreparedStatement preparedStatement = con.prepareStatement(newSQL)) {
             preparedStatement.setLong(1, userId);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {

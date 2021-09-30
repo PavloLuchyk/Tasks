@@ -6,5 +6,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface CommentDao extends CrudDao<Comment> {
-    List<Comment> getAllCommentsByUserId(long userId) throws SQLException;
+    List<Comment> getAllCommentsByUserId(long userId, SortingOrder order) throws SQLException;
 }
