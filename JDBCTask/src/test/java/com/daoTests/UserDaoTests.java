@@ -6,30 +6,22 @@ import com.dao.CrudDao;
 import com.dao.DataSource;
 import com.dao.postgres.UserDaoPostgres;
 import com.entities.User;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Statement;
 
 
 public class UserDaoTests {
 
     private static Connection connection;
     private static CrudDao<User> userCrudDao;
-    private static Savepoint savepoint;
 
     @BeforeAll
     public static void init() throws SQLException {
         connection = DataSource.getConnection();
         connection.setAutoCommit(false);
-        try (Statement statement = connection.createStatement()){
-            statement.execute("BEGIN;");
-        }
-        savepoint = connection.setSavepoint("Savepoint");
         userCrudDao = new UserDaoPostgres(connection);
     }
 
@@ -65,10 +57,4 @@ public class UserDaoTests {
         assertThrows(SQLException.class, () ->userCrudDao.readById(user.getId()));
     }
 
-    @AfterAll
-    public static void destroy() throws SQLException {
-        try (Statement statement = connection.createStatement()){
-            statement.execute("ROLLBACK;");
-        }
-    }
 }
