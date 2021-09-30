@@ -46,12 +46,19 @@ public class AdvertisementDaoPostgres implements CrudDao<Advertisement> {
     @Override
     public Advertisement create(Advertisement element) throws SQLException {
         if (element != null) {
-            try (PreparedStatement preparedStatement = con.prepareStatement(CREATE_SQL)) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, element.getTitle());
                 preparedStatement.setTimestamp(2, Timestamp.valueOf(element.getCreationDate()));
                 preparedStatement.setString(3, element.getDescription());
                 preparedStatement.setLong(4, element.getOwner().getId());
                 preparedStatement.execute();
+                try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                    if (rs.next()&&rs != null) {
+                        element.setId(rs.getInt(1));
+                    } else {
+                        throw new SQLException("Error reading generated key");
+                    }
+                }
                 return element;
             }
         }

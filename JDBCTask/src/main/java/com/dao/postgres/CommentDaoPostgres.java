@@ -57,12 +57,19 @@ public class CommentDaoPostgres implements CommentDao {
     @Override
     public Comment create(Comment element) throws SQLException {
         if (element != null) {
-            try (PreparedStatement preparedStatement = con.prepareStatement(CREATE_SQL)) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setTimestamp(1, Timestamp.valueOf(element.getCreationDate()));
                 preparedStatement.setString(2, element.getText());
                 preparedStatement.setLong(3, element.getOwner().getId());
                 preparedStatement.setLong(4, element.getAdvertisement().getId());
                 preparedStatement.execute();
+                try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                    if (rs.next()&&rs != null) {
+                        element.setId(rs.getInt(1));
+                    } else {
+                        throw new SQLException("Error reading generated key");
+                    }
+                }
                 return element;
             }
         }
