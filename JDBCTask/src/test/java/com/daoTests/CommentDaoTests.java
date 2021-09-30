@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,9 +62,19 @@ public class CommentDaoTests {
     }
 
     @Test
-    public void deleteAdvertisementTest() throws SQLException {
+    public void deleteCommentTest() throws SQLException {
         Comment comment = commentDao.create(new Comment(0, LocalDateTime.now(), "Text", user, advertisement));
         commentDao.delete(comment);
         assertThrows(SQLException.class, ()->commentDao.readById(comment.getId()));
+    }
+
+    @Test
+    public void getAllCommentsByUserIdTest() throws SQLException {
+        List<Comment> expected = new ArrayList<>();
+        expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text", user, advertisement)));
+        expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text2", user, advertisement)));
+        expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text3", user, advertisement)));
+        List<Comment> actual = commentDao.getAllCommentsByUserId(user.getId());
+        assertEquals(expected, actual);
     }
 }
