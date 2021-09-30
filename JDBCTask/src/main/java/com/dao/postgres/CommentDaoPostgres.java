@@ -36,8 +36,8 @@ public class CommentDaoPostgres implements CommentDao {
                     " select advertisements.*, users.fullname, users.password " +
                     " from advertisements inner join users on advertisements.userid = users.id " +
                     ") as advertisements1 " +
-                    "on comments.advertismentid = advertisements1.id" +
-                    " where comments.id = ?;";
+                    "on comments.advertismentid = advertisements1.id " +
+                    "where comments.id = ?;";
     private static final String SELECT_BY_USER_ID_SQL =
             "select comments.*, users.fullname, users.password, advertisements1.*  " +
                     "from comments " +
@@ -46,8 +46,8 @@ public class CommentDaoPostgres implements CommentDao {
                     " select advertisements.*, users.fullname, users.password " +
                     " from advertisements inner join users on advertisements.userid = users.id " +
                     ") as advertisements1 " +
-                    "on comments.advertismentid = advertisements1.id" +
-                    " where comments.userid = ? " +
+                    "on comments.advertismentid = advertisements1.id " +
+                    "where comments.userid = ? " +
                     "order by comments.creationdate desc;";
 
     public CommentDaoPostgres(Connection con) {

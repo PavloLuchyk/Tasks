@@ -4,11 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class Serializator<T> {
+public class Serializer<T> {
 
     private int serializationIndex = 1;
     private  ObjectMapper objectMapper = new ObjectMapper();

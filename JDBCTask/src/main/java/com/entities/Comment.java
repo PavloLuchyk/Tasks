@@ -2,6 +2,10 @@ package com.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.serialization.LocalDateTimeDeserializer;
+import com.serialization.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -13,6 +17,8 @@ import java.util.Objects;
 public class Comment {
     private long id;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
     private LocalDateTime creationDate;
 
     private String text;

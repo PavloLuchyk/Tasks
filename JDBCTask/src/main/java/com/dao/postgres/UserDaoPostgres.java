@@ -24,10 +24,17 @@ public class UserDaoPostgres implements CrudDao<User> {
     @Override
     public User create(User user) throws SQLException{
         if (user != null) {
-            try (PreparedStatement preparedStatement= con.prepareStatement(CREATE_SQL)) {
+            try (PreparedStatement preparedStatement= con.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, user.getFullName());
                 preparedStatement.setString(2, user.getPassword());
                 preparedStatement.execute();
+                try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                    if (rs.next()&&rs != null) {
+                        user.setId(rs.getInt(1));
+                    } else {
+                        throw new SQLException("Error reading generated key");
+                    }
+                }
                 return user;
             }
         }
