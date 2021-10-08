@@ -1,30 +1,35 @@
 package com.serialization;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class Serializer<T> {
 
     private int serializationIndex = 1;
     private  ObjectMapper objectMapper = new ObjectMapper();
 
-    public void serialize(T t) throws IOException {
+    public String serialize(T t) throws IOException {
         objectMapper.registerModule(new JavaTimeModule());
-        String fileName = Arrays.stream(t.getClass().toString().replace('.', ' ').split(" "))
-                .filter(s -> Character.isUpperCase(s.charAt(0)))
-                .findFirst()
-                .get() + serializationIndex + ".json";
-        System.out.println(fileName);
-        objectMapper.writeValue(new File("json/" + fileName), t);
-        serializationIndex++;
+        System.out.println(objectMapper.writeValueAsString(t));
+        return objectMapper.writeValueAsString(t);
     }
 
     public T deserialize(File file, Class<T> tClass) throws IOException {
         return objectMapper.readerFor(tClass).readValue(file);
+    }
+
+    public List<T> deserialize(File file) throws IOException {
+        return objectMapper.readerFor(new TypeReference<List<T>>() {}).readValue(file);
+    }
+
+    public T deserialize(String json, Class<T> tClass) throws IOException {
+        return objectMapper.readerFor(tClass).readValue(json, tClass);
     }
 
 }

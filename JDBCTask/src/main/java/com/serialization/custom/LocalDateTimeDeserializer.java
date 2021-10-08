@@ -1,4 +1,4 @@
-package com.serialization;
+package com.serialization.custom;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;

@@ -11,10 +11,14 @@ import com.entities.Advertisement;
 import com.entities.Comment;
 import com.entities.User;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +26,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CommentDaoTests {
+
     private static Connection connection;
+
     private static CommentDao commentDao;
-    private static User user;
-    private static Advertisement advertisement;
+
+    private static User user = Mockito.mock(User.class);
+
+    private static Advertisement advertisement = Mockito.mock(Advertisement.class);
+
+    private static String date = "2021-09-30T12:45:30";
 
     @BeforeAll
     public static void init() throws SQLException {
         connection = DataSource.getConnection();
         connection.setAutoCommit(false);
-        CrudDao<User> userCrudDao = new UserDaoPostgres(connection);
-        CrudDao<Advertisement> advertisementCrudDao = new AdvertisementDaoPostgres(connection);
         commentDao = new CommentDaoPostgres(connection);
-        user = userCrudDao.create(new User(0, "User", "password"));
-        advertisement = advertisementCrudDao.create(
-                new Advertisement(0, "title", LocalDateTime.now(), "description", user));
+        Mockito.when(user.getId()).thenReturn(2L);
+        Mockito.when(advertisement.getId()).thenReturn(34L);
     }
 
     @Test
@@ -56,7 +63,7 @@ public class CommentDaoTests {
 
     @Test
     public void readByIdCommentTest() throws SQLException {
-        Comment expected = new Comment(0, LocalDateTime.now(), "Text", user, advertisement);
+        Comment expected = new Comment(0, LocalDateTime.parse(date), "Text", user, advertisement);
         expected = commentDao.create(expected);
         Comment actual = commentDao.readById(expected.getId());
         assertEquals(expected, actual);
@@ -71,10 +78,11 @@ public class CommentDaoTests {
 
     @Test
     public void getAllCommentsByUserIdTest() throws SQLException {
+        User user = new UserDaoPostgres(connection).create(new User(0, "User", "pass"));
         List<Comment> expected = new ArrayList<>();
-        expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text", user, advertisement)));
-        expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text2", user, advertisement)));
-        expected.add(commentDao.create(new Comment(0, LocalDateTime.now(), "Text3", user, advertisement)));
+        expected.add(commentDao.create(new Comment(0, LocalDateTime.parse(date), "Text", user, advertisement)));
+        expected.add(commentDao.create(new Comment(0, LocalDateTime.parse(date), "Text2", user, advertisement)));
+        expected.add(commentDao.create(new Comment(0, LocalDateTime.parse(date), "Text3", user, advertisement)));
         List<Comment> actual = commentDao.getAllCommentsByUserId(user.getId(), SortingOrder.ASC);
         assertEquals(expected, actual);
     }

@@ -1,0 +1,55 @@
+plugins {
+    id 'application'
+    id 'jacoco'
+    id "com.bmuschko.tomcat" version "2.7.0"
+}
+
+application {
+    mainClass = 'org.gradle.MyMain'
+}
+
+jacoco {
+    applyTo run
+}
+
+tasks.register('applicationCodeCoverageReport', JacocoReport) {
+    executionData run
+    sourceSets sourceSets.main
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.platform:junit-platform-runner:1.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
+
+
+
+    implementation 'org.springframework:spring-core:5.3.10'
+    implementation 'org.springframework:spring-context:5.3.10'
+    implementation 'org.springframework:spring-web:5.3.10'
+    implementation 'org.springframework:spring-webmvc:5.3.10'
+    implementation 'org.springframework:spring-orm:5.3.10'
+    implementation 'org.hibernate:hibernate-core:5.5.7.Final'
+    implementation 'org.postgresql:postgresql:42.2.24.jre7'
+    implementation 'org.hibernate:hibernate-c3p0:5.5.7.Final'
+    implementation 'com.mchange:c3p0:0.9.5.5'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+

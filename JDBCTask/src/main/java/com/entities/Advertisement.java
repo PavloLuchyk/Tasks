@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.serialization.LocalDateTimeDeserializer;
-import com.serialization.LocalDateTimeSerializer;
+import com.serialization.custom.LocalDateTimeDeserializer;
+import com.serialization.custom.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 import java.util.List;

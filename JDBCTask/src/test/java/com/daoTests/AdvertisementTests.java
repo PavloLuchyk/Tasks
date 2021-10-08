@@ -10,24 +10,29 @@ import com.entities.Advertisement;
 import com.entities.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class AdvertisementTests {
 
     private static Connection connection;
+
     private static CrudDao<Advertisement> advertisementCrudDao;
-    private static User user;
+
+    private static User user = Mockito.mock(User.class);
+
+    private static String date = "2021-09-30T12:45:30";
 
     @BeforeAll
     public static void init() throws SQLException {
         connection = DataSource.getConnection();
         connection.setAutoCommit(false);
-        CrudDao<User> userCrudDao = new UserDaoPostgres(connection);
         advertisementCrudDao = new AdvertisementDaoPostgres(connection);
-        user = userCrudDao.create(new User(0, "User", "password"));
+        Mockito.when(user.getId()).thenReturn(2L);
     }
 
     @Test
@@ -48,9 +53,11 @@ public class AdvertisementTests {
 
     @Test
     public void readByIdAdvertisementTest() throws SQLException {
-        Advertisement expected = new Advertisement(0, "Title", LocalDateTime.now(), "Some text", user);
+        Advertisement expected = new Advertisement(0, "Title", LocalDateTime.parse(date), "Some text", user);
         expected = advertisementCrudDao.create(expected);
+        expected.setComments(new ArrayList<>());
         Advertisement actual = advertisementCrudDao.readById(expected.getId());
+        actual.setOwner(user);
         assertEquals(expected, actual);
     }
 

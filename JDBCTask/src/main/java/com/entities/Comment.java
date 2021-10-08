@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.serialization.LocalDateTimeDeserializer;
-import com.serialization.LocalDateTimeSerializer;
+import com.serialization.custom.LocalDateTimeDeserializer;
+import com.serialization.custom.LocalDateTimeSerializer;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

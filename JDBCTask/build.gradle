@@ -23,6 +23,7 @@ dependencies {
 
     implementation 'com.zaxxer:HikariCP:5.0.0'
 
+    implementation 'org.mongodb:mongodb-driver:3.12.10'
 }
 
 test {

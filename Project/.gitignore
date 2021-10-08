@@ -1,0 +1,7 @@
+.gradle/
+build/
+json/
+out/
+.idea/
+.jpb/
+src/main/resources/db.properties
