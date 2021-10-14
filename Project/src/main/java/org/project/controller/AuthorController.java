@@ -1,7 +1,6 @@
 package org.project.controller;
 
 import org.project.model.Author;
-import org.project.model.Category;
 import org.project.service.AuthorService;
 import org.project.util.PageSize;
 import org.project.util.SortingOrder;
