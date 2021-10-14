@@ -3,8 +3,14 @@ package org.project.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.CreationTimestamp;
+import org.project.util.serialization.custom.LocalDateTimeDeserializer;
+import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -20,9 +26,11 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
+    @NotBlank(message = "The 'title' cannot be empty")
     private String title;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT", nullable = false)
     private String description;
 
     @JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -38,6 +46,9 @@ public class Advertisement {
     private List<Comment> comments;
 
     @Column(name = "create_date")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
+    @CreationTimestamp
     private LocalDateTime createDate;
 
     public Advertisement() {

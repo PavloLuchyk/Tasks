@@ -6,12 +6,13 @@ import org.project.util.PageSize;
 import org.project.util.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-//@CrossOrigin
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class CategoryController {
 
@@ -22,11 +23,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/category/add")
-    public ResponseEntity<?> insert(@RequestBody Category category) {
+    public ResponseEntity<Category> insert(@RequestBody Category category) {
         System.out.println("Json " + category);
         category = categoryService.create(category);
-        return ResponseEntity.ok().body("Author: " + category.getId());
+        return ResponseEntity.ok(category);
     }
 
     @GetMapping("/category/{id}")
@@ -54,10 +56,10 @@ public class CategoryController {
     }
 
     @PutMapping("/category/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Category category) {
+    public ResponseEntity<Category> update(@PathVariable("id") long id, @RequestBody Category category) {
         category.setId(id);
-        categoryService.update(category);
-        return ResponseEntity.ok("Category updated successfully " + category.getId());
+        category = categoryService.update(category);
+        return ResponseEntity.ok(category);
     }
 
     @DeleteMapping("/category/{id}")

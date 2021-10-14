@@ -4,4 +4,5 @@ import org.project.model.Author;
 import org.project.service.CrudService;
 
 public interface AuthorService extends CrudService<Author> {
+    Author getByEmail(String email);
 }

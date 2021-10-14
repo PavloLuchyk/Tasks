@@ -48,4 +48,18 @@ public class AuthorServiceTests {
         assertThrows(IllegalArgumentException.class, () -> authorService.create(null));
     }
 
+    @Test
+    public void getByEmailTest() {
+        Author expected = new Author();
+        Mockito.when(authorRepository.getByEmail("example@em.com")).thenReturn(expected);
+        Author actual = authorService.getByEmail("example@em.com");
+        assertEquals(expected, actual);
+        Mockito.verify(authorRepository, Mockito.times(1)).getByEmail("example@em.com");
+    }
+
+    @Test
+    public void getByEmailNullTest() {
+        assertThrows(IllegalArgumentException.class, () -> authorService.getByEmail(null));
+    }
+
 }

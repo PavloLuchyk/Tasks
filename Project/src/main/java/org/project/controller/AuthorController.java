@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class AuthorController {
 
@@ -20,11 +21,11 @@ public class AuthorController {
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
+
     @PostMapping("/author/add")
-    public ResponseEntity<?> insert(@RequestBody Author author) {
-        System.out.println("Json " + author);
+    public ResponseEntity<Author> insert(@RequestBody Author author) {
         author = authorService.create(author);
-        return ResponseEntity.ok().body("New author" + author.getId());
+        return ResponseEntity.ok(author);
     }
 
     @GetMapping("/author/{id}")
@@ -52,10 +53,10 @@ public class AuthorController {
     }
 
     @PutMapping("/author/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Author author) {
+    public ResponseEntity<Author> update(@PathVariable("id") long id, @RequestBody Author author) {
         author.setId(id);
-        authorService.update(author);
-        return ResponseEntity.ok("Author updated successfully " + author.getId());
+        author = authorService.update(author);
+        return ResponseEntity.ok(author);
     }
 
     @DeleteMapping("/author/{id}")

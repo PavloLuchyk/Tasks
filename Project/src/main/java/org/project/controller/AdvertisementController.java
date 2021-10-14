@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class AdvertisementController {
     
@@ -22,10 +23,9 @@ public class AdvertisementController {
     }
 
     @PostMapping("/advertisement/add")
-    public ResponseEntity<?> insert(@RequestBody Advertisement advertisement) {
-        System.out.println("Json " + advertisement);
+    public ResponseEntity<Advertisement> insert(@RequestBody Advertisement advertisement) {
         advertisement = advertisementService.create(advertisement);
-        return ResponseEntity.ok().body("New advertisement" + advertisement.getId());
+        return ResponseEntity.ok(advertisement);
     }
 
     @GetMapping("/advertisement/{id}")
@@ -59,10 +59,10 @@ public class AdvertisementController {
     }
 
     @PutMapping("/advertisement/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Advertisement advertisement) {
+    public ResponseEntity<Advertisement> update(@PathVariable("id") long id, @RequestBody Advertisement advertisement) {
         advertisement.setId(id);
-        advertisementService.update(advertisement);
-        return ResponseEntity.ok("advertisement updated successfully " + advertisement.getId());
+        advertisement = advertisementService.update(advertisement);
+        return ResponseEntity.ok(advertisement);
     }
 
     @DeleteMapping("/advertisement/{id}")

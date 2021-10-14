@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.io.Serializable;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 
 @Transactional
@@ -19,5 +21,15 @@ public class AuthorRepositoryImpl extends CrudRepositoryGeneral<Author> implemen
     @Autowired
     public AuthorRepositoryImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    @Override
+    public Author getByEmail(String email) {
+        CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<Author> cq = cb.createQuery(clazz);
+        Root<Author> from = cq.from(clazz);
+        cq.select(from);
+        CriteriaQuery<Author> query = cq.where(cb.equal(from.get("email"),email));
+        return sessionFactory.getCurrentSession().createQuery(query).getSingleResult();
     }
 }

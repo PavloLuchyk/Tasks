@@ -61,7 +61,7 @@ public class AdvertisementControllerTests {
     }
 
     @Test
-    public void readAllTests() throws Exception {
+    public void readAllTest() throws Exception {
         Mockito.when(service.readAll()).thenReturn(new ArrayList<>());
         mockMvc.perform(MockMvcRequestBuilders.get("/advertisement"))
                 .andDo(MockMvcResultHandlers.print())

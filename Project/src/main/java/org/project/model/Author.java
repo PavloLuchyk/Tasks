@@ -1,9 +1,14 @@
 package org.project.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.CreationTimestamp;
+import org.project.util.serialization.custom.LocalDateTimeDeserializer;
+import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -15,18 +20,33 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
+    @Pattern(regexp = "[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
+    @Pattern(regexp = "[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
     private String lastName;
 
+    @Pattern(regexp = "[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", message = "Must be a valid e-mail address")
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
     private String password;
 
     @Column(name = "create_date")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
+    @CreationTimestamp
     private LocalDateTime createDate;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Advertisement> advertisements;
@@ -106,6 +126,15 @@ public class Author {
 
     public Author setComments(List<Comment> comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Author setRole(Role role) {
+        this.role = role;
         return this;
     }
 

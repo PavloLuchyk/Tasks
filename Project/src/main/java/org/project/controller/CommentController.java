@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class CommentController {
     
@@ -22,10 +23,9 @@ public class CommentController {
     }
 
     @PostMapping("/comment/add")
-    public ResponseEntity<?> insert(@RequestBody Comment comment) {
-        System.out.println("Json " + comment);
+    public ResponseEntity<Comment> insert(@RequestBody Comment comment) {
         comment = commentService.create(comment);
-        return ResponseEntity.ok().body("New comment" + comment.getId());
+        return ResponseEntity.ok(comment);
     }
 
     @GetMapping("/comment/{id}")
@@ -59,10 +59,10 @@ public class CommentController {
     }
 
     @PutMapping("/comment/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Comment comment) {
+    public ResponseEntity<Comment> update(@PathVariable("id") long id, @RequestBody Comment comment) {
         comment.setId(id);
-        commentService.update(comment);
-        return ResponseEntity.ok("comment updated successfully " + comment.getId());
+        comment = commentService.update(comment);
+        return ResponseEntity.ok(comment);
     }
 
     @DeleteMapping("/comment/{id}")

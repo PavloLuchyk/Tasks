@@ -3,8 +3,14 @@ package org.project.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.CreationTimestamp;
+import org.project.util.serialization.custom.LocalDateTimeDeserializer;
+import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -21,11 +27,17 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true, nullable = false)
+    @NotBlank(message = "The 'name' cannot be empty")
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
     @Column(name = "create_date")
+    @CreationTimestamp
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
@@ -68,6 +80,15 @@ public class Category {
 
     public Category setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
+        return this;
+    }
+
+    public List<Advertisement> getAdvertisements() {
+        return advertisements;
+    }
+
+    public Category setAdvertisements(List<Advertisement> advertisements) {
+        this.advertisements = advertisements;
         return this;
     }
 

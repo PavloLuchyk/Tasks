@@ -58,20 +58,20 @@ public abstract class CrudRepositoryGeneral<T> implements CrudRepository<T>{
         return sessionFactory.getCurrentSession().get(clazz, id);
     }
 
-    @Transactional
+
     @Override
     public void delete(T element) {
         sessionFactory.getCurrentSession().delete(element);
     }
 
-    @Transactional
+
     @Override
     public T update(T element) {
         sessionFactory.getCurrentSession().update(element);
         return element;
     }
 
-    @Transactional
+
     @Override
     public Serializable create(T element) {
         return sessionFactory.getCurrentSession().save(element);

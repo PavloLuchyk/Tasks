@@ -60,7 +60,7 @@ public class CrudServiceGeneralTests {
 
     @Test
     public void readByIdNegative() {
-        assertThrows(IllegalArgumentException.class,() -> categoryService.readById(-1));
+        assertThrows(IllegalArgumentException.class, () -> categoryService.readById(-1));
     }
 
     @Test

@@ -1,6 +1,13 @@
 package org.project.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.CreationTimestamp;
+import org.project.util.serialization.custom.LocalDateTimeDeserializer;
+import org.project.util.serialization.custom.LocalDateTimeSerializer;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -11,7 +18,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT", nullable = false)
+    @NotBlank(message = "The 'text' cannot be empty")
     private String text;
 
     @ManyToOne
@@ -23,6 +31,9 @@ public class Comment {
     private Author author;
 
     @Column(name = "create_date")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
+    @CreationTimestamp
     private LocalDateTime createDate;
 
     public Comment() {

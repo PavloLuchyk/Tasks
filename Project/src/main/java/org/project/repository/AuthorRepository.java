@@ -4,5 +4,6 @@ import org.project.model.Author;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AuthorRepository extends CrudRepository<Author>{
+public interface AuthorRepository extends CrudRepository<Author> {
+    Author getByEmail(String email);
 }
