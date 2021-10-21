@@ -1,4 +1,4 @@
-package org.project.util;
+package org.project.enums;
 
 public enum SortingOrder {
     ASC, DESC

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.project.util.serialization.custom.LocalDateTimeDeserializer;
 import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
@@ -40,7 +41,7 @@ public class Category {
     @JsonDeserialize( using = LocalDateTimeDeserializer.class)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
     @OrderBy("createDate desc")
     private List<Advertisement> advertisements;
 

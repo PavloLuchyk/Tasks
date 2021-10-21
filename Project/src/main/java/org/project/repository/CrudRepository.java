@@ -1,7 +1,7 @@
 package org.project.repository;
 
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;

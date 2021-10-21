@@ -2,13 +2,14 @@ package org.project.controller;
 
 import org.project.model.Category;
 import org.project.service.CategoryService;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/category/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Category> insert(@RequestBody Category category) {
         System.out.println("Json " + category);
         category = categoryService.create(category);
@@ -56,6 +57,7 @@ public class CategoryController {
     }
 
     @PutMapping("/category/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Category> update(@PathVariable("id") long id, @RequestBody Category category) {
         category.setId(id);
         category = categoryService.update(category);
@@ -63,8 +65,17 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        categoryService.delete(new Category().setId(id));
+        categoryService.delete(categoryService.readById(id));
         return ResponseEntity.ok("Category with id " + id + " has been deleted");
     }
+
+    @GetMapping("/category/check/{name}")
+    public ResponseEntity<?> checkUnique(@PathVariable("name") String name) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("unique", categoryService.checkUnique(name));
+        return ResponseEntity.ok(categoryService.checkUnique(name));
+    }
+
 }

@@ -8,8 +8,8 @@ import org.mockito.MockitoAnnotations;
 import org.project.model.Category;
 import org.project.repository.CategoryRepository;
 import org.project.service.impl.CategoryServiceImpl;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

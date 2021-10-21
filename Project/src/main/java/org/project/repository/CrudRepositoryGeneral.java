@@ -1,8 +1,8 @@
 package org.project.repository;
 
 import org.hibernate.SessionFactory;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Repository;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Repository
-@Transactional
+//@Transactional
 public abstract class CrudRepositoryGeneral<T> implements CrudRepository<T>{
 
     protected SessionFactory sessionFactory;

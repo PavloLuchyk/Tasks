@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 
-@Transactional
 @Repository
 public class AuthorRepositoryImpl extends CrudRepositoryGeneral<Author> implements AuthorRepository {
 
@@ -24,6 +24,7 @@ public class AuthorRepositoryImpl extends CrudRepositoryGeneral<Author> implemen
     }
 
     @Override
+    @Transactional
     public Author getByEmail(String email) {
         CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
         CriteriaQuery<Author> cq = cb.createQuery(clazz);
@@ -31,5 +32,15 @@ public class AuthorRepositoryImpl extends CrudRepositoryGeneral<Author> implemen
         cq.select(from);
         CriteriaQuery<Author> query = cq.where(cb.equal(from.get("email"),email));
         return sessionFactory.getCurrentSession().createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public boolean checkUniqueByEmail(String email) {
+        try {
+            getByEmail(email);
+        } catch (NoResultException e) {
+            return true;
+        }
+        return false;
     }
 }

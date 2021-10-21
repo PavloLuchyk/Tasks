@@ -1,6 +1,7 @@
 package org.project.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.project.model.Role;
 import org.project.security.JwtUserDetailsService;
 import org.project.security.jwt.JwtConfigurer;
 import org.project.security.jwt.JwtTokenFilter;
@@ -87,13 +88,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/author/add").permitAll()
-                //.anyRequest().denyAll()
+                .antMatchers(HttpMethod.POST,"/login", "/author/add").permitAll()
+                .antMatchers(HttpMethod.GET,"/category","/category/**",
+                        "/advertisement/**", "/advertisement",
+                        "/comment", "/comment/**").permitAll()
+                //.antMatchers("/author/**").hasRole(Role.ADMIN.toString())
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider))
-               // .and()
-                //.addFilterBefore()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .cors();

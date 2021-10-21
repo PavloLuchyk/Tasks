@@ -21,12 +21,12 @@ public class Author {
     private long id;
 
     @Column(name = "first_name", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]+",
+    @Pattern(regexp = "^[A-Z][a-z]{1,20}([-][A-Z][a-z]{1,20})?",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
-    @Pattern(regexp = "[A-Z][a-z]+",
+    @Pattern(regexp = "^[A-Z][a-z]{1,20}([-][A-Z][a-z]{1,20})?",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     private String lastName;
 

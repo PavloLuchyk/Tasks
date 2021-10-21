@@ -1,14 +1,17 @@
 package org.project.service;
 
 import org.project.repository.CrudRepository;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
+@Transactional
+@Service
 public abstract class CrudServiceGeneral<T> implements CrudService<T> {
 
     private CrudRepository<T> crudRepository;

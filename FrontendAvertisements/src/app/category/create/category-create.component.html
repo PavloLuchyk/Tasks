@@ -1,0 +1,18 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title: </label>
+    <input id="title" type="text" formControlName="name" required>
+    <div *ngIf="!(name?.valid)&&(name?.dirty||name?.touched)">
+      <div *ngIf="name?.errors">
+        Name must be unique
+      </div>
+    </div>
+  </div>
+  <div>
+    <label for="description">Description: </label>
+    <input id="description" type="text" formControlName="description">
+  </div>
+  <div>
+    <input type="submit" value="Submit" [disabled]="!categoryForm.valid">
+  </div>
+</form>

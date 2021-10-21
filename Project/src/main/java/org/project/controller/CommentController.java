@@ -2,10 +2,11 @@ package org.project.controller;
 
 import org.project.model.Comment;
 import org.project.service.CommentService;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class CommentController {
     }
 
     @PostMapping("/comment/add")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<Comment> insert(@RequestBody Comment comment) {
         comment = commentService.create(comment);
         return ResponseEntity.ok(comment);
@@ -59,6 +61,7 @@ public class CommentController {
     }
 
     @PutMapping("/comment/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @commentController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<Comment> update(@PathVariable("id") long id, @RequestBody Comment comment) {
         comment.setId(id);
         comment = commentService.update(comment);
@@ -66,8 +69,15 @@ public class CommentController {
     }
 
     @DeleteMapping("/comment/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @commentController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         commentService.delete(new Comment().setId(id));
         return ResponseEntity.ok("comment with id " + id + " has been deleted");
+    }
+
+    public boolean isOwner(long commentId, long id) {
+        Comment current = commentService.readById(commentId);
+        return id == current.getAuthor().getId()
+                || id == current.getAdvertisement().getAuthor().getId();
     }
 }

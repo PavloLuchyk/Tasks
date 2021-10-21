@@ -1,0 +1,9 @@
+<h1>Categories</h1>
+<a routerLink="/categories/create">Create category</a>
+<ul class="categories">
+  <li *ngFor="let category of categories">
+    <a routerLink="/details/{{category.id}}">{{category.name}}</a> |
+    <button (click)="deleteCategory(category.id)">Delete</button>
+  </li>
+</ul>
+

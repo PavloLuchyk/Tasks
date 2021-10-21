@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JwtUserFactory {
+
     public static JwtUser getJwtUser(Author author) {
         return new JwtUser(
                 author.getId(),
-                author.getFirstName(),
-                author.getLastName(),
                 author.getEmail(),
                 author.getPassword(),
-                author.getCreateDate(),
                 getAuthorAuthorities(author)
         );
     }

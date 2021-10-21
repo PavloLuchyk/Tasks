@@ -2,10 +2,11 @@ package org.project.controller;
 
 import org.project.model.Advertisement;
 import org.project.service.AdvertisementService;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class AdvertisementController {
     }
 
     @PostMapping("/advertisement/add")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<Advertisement> insert(@RequestBody Advertisement advertisement) {
         advertisement = advertisementService.create(advertisement);
         return ResponseEntity.ok(advertisement);
@@ -59,6 +61,7 @@ public class AdvertisementController {
     }
 
     @PutMapping("/advertisement/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @advertisementController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<Advertisement> update(@PathVariable("id") long id, @RequestBody Advertisement advertisement) {
         advertisement.setId(id);
         advertisement = advertisementService.update(advertisement);
@@ -66,8 +69,13 @@ public class AdvertisementController {
     }
 
     @DeleteMapping("/advertisement/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @advertisementController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         advertisementService.delete(new Advertisement().setId(id));
         return ResponseEntity.ok("advertisement with id " + id + " has been deleted");
+    }
+
+    public boolean isOwner(long advertisementId, long id) {
+        return id == advertisementService.readById(advertisementId).getAuthor().getId();
     }
 }

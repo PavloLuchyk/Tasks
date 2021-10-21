@@ -41,7 +41,6 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationUserDto requestDto) {
         try {
-            System.out.println(requestDto.getPassword() + " " + requestDto.getUsername());
             String username = requestDto.getUsername();
             Authentication authentication   =
                     authenticationManager.authenticate(
@@ -49,7 +48,7 @@ public class AuthenticationController {
                     );
             System.out.println(authentication);
             Author author = authorService.getByEmail(username);
-
+            System.out.println(author);
             if (author == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
@@ -62,6 +61,8 @@ public class AuthenticationController {
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new BadCredentialsException("Invalid username or password");
         }
     }

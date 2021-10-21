@@ -16,7 +16,6 @@ import java.util.List;
 
 
 @Repository
-@Transactional
 public class CommentRepositoryImpl extends CrudRepositoryGeneral<Comment> implements CommentRepository {
 
     @Autowired

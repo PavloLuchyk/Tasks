@@ -2,12 +2,14 @@ package org.project.controller;
 
 import org.project.model.Author;
 import org.project.service.AuthorService;
-import org.project.util.PageSize;
-import org.project.util.SortingOrder;
+import org.project.enums.PageSize;
+import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,24 +37,28 @@ public class AuthorController {
     }
 
     @GetMapping("/author/sorted/{order}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<Author>> getAllSorted(@PathVariable String order) {
         List<Author> authors = authorService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()));
         return ResponseEntity.ok(authors);
     }
 
     @GetMapping("/author/pages/{number}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Map<Integer, List<Author>>> getAllInPages(@PathVariable int number) {
         Map<Integer, List<Author>> pages = authorService.getAllInPages(PageSize.getFromSize(number));
         return ResponseEntity.ok(pages);
     }
 
     @GetMapping("/author")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<Author>> getAll(){
         List<Author> authors = authorService.readAll();
         return ResponseEntity.ok(authors);
     }
 
     @PutMapping("/author/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<Author> update(@PathVariable("id") long id, @RequestBody Author author) {
         author.setId(id);
         author = authorService.update(author);
@@ -60,8 +66,16 @@ public class AuthorController {
     }
 
     @DeleteMapping("/author/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        authorService.delete(new Author().setId(id));
+        authorService.delete(authorService.readById(id));
         return ResponseEntity.ok("Author with id " + id + " has been deleted");
+    }
+
+    @GetMapping("/author/check")
+    public ResponseEntity<?> checkUnique(@RequestParam("email") String name) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("unique", authorService.checkUnique(name));
+        return ResponseEntity.ok(authorService.checkUnique(name));
     }
 }

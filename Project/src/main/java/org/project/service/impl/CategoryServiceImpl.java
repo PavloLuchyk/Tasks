@@ -29,4 +29,10 @@ public class CategoryServiceImpl extends CrudServiceGeneral<Category> implements
         }
         return element.setId(Long.parseLong(categoryRepository.create(element).toString()));
     }
+
+    @Transactional
+    @Override
+    public boolean checkUnique(String name) {
+        return categoryRepository.checkUniqueName(name);
+    }
 }

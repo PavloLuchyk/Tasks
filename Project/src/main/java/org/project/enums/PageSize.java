@@ -1,4 +1,4 @@
-package org.project.util;
+package org.project.enums;
 
 public enum PageSize {
     SIZE15(15),
