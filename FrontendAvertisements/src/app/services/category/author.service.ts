@@ -2,8 +2,8 @@ import {Injectable} from "@angular/core";
 import {AppSettings} from "../../constants/AppSettings";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import {AuthorView} from "../../author/author-view";
-import {AuthorRegistration} from "../../author/author-registration";
+import {AuthorView} from "../../models/author-view";
+import {AuthorRegistration} from "../../models/author-registration";
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/forms";
 import {catchError, map} from "rxjs/operators";
 
@@ -24,6 +24,11 @@ export class AuthorService {
 
   getAuthor(id:number): Observable<AuthorView> {
     const url = `${this.authorUrl}/${id}`;
+    return this.http.get<AuthorView>(url);
+  }
+
+  getAuthorByEmail(email: string): Observable<AuthorView> {
+    const url = `${this.authorUrl}/email/${email}`;
     return this.http.get<AuthorView>(url);
   }
 
@@ -51,7 +56,7 @@ export class AuthorService {
   getUniqueValidator() : AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.isUnique(control.value).pipe(
-        map(isTaken => (!isTaken ? { unique: false } : null)),
+        map(isTaken => (!isTaken ? { exists: false } : null)),
         catchError(() => of(null)));
     }
   }

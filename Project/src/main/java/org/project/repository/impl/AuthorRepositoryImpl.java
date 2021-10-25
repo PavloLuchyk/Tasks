@@ -30,7 +30,7 @@ public class AuthorRepositoryImpl extends CrudRepositoryGeneral<Author> implemen
         CriteriaQuery<Author> cq = cb.createQuery(clazz);
         Root<Author> from = cq.from(clazz);
         cq.select(from);
-        CriteriaQuery<Author> query = cq.where(cb.equal(from.get("email"),email));
+        CriteriaQuery<Author> query = cq.where(cb.equal(from.get("email"), email));
         return sessionFactory.getCurrentSession().createQuery(query).getSingleResult();
     }
 

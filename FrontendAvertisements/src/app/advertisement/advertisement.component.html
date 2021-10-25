@@ -1,0 +1,8 @@
+<h1>Advertisements</h1>
+<a routerLink="/advertisement/create">Create advertisement</a>
+<ul>
+  <li *ngFor="let advertisement of advertisements">
+    <a routerLink="/details/{{advertisement.id}}">{{advertisement.title}}</a> |
+    <button (click)="deleteAdvertisement(advertisement.id)">Delete</button>
+  </li>
+</ul>

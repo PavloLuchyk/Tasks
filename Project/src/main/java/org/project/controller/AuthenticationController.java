@@ -46,9 +46,7 @@ public class AuthenticationController {
                     authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(username, requestDto.getPassword())
                     );
-            System.out.println(authentication);
             Author author = authorService.getByEmail(username);
-            System.out.println(author);
             if (author == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
@@ -57,8 +55,8 @@ public class AuthenticationController {
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
+            response.put("role", author.getRole());
             response.put("token", token);
-
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             e.printStackTrace();

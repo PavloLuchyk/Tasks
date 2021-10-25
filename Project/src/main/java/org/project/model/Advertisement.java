@@ -2,6 +2,7 @@ package org.project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,16 +34,17 @@ public class Advertisement {
     @Column(columnDefinition="TEXT", nullable = false)
     private String description;
 
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     @ManyToOne
     private Category category;
 
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
     @ManyToOne
     private Author author;
 
     @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL)
     @OrderBy("createDate desc")
+    @JsonIgnore
     private List<Comment> comments;
 
     @Column(name = "create_date")

@@ -1,6 +1,8 @@
 <nav>
   <a routerLink="/categories">Categories</a> |
-  <a routerLink="/register">Register</a>
+  <a routerLink="/register" *ngIf="!isLogged()">Register</a> |
+  <a routerLink="/login" *ngIf="!isLogged()">Login</a> |
+  <button *ngIf="isLogged()" (click)="logout()">Log out</button>
 </nav>
 <router-outlet></router-outlet>
 <app-messages></app-messages>

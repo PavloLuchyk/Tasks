@@ -36,6 +36,12 @@ public class AuthorController {
         return ResponseEntity.ok().body(author);
     }
 
+    @GetMapping("/author/email/{email}")
+    public ResponseEntity<Author> getById(@PathVariable String email) {
+        Author author = authorService.getByEmail(email);
+        return ResponseEntity.ok().body(author);
+    }
+
     @GetMapping("/author/sorted/{order}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<Author>> getAllSorted(@PathVariable String order) {

@@ -6,7 +6,6 @@ import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +17,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Repository
-//@Transactional
 public abstract class CrudRepositoryGeneral<T> implements CrudRepository<T>{
 
     protected SessionFactory sessionFactory;

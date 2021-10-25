@@ -23,11 +23,11 @@ public class Comment {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "advertisement_id", referencedColumnName = "id")
+    @JoinColumn(name = "advertisement_id", referencedColumnName = "id", nullable = false)
     private Advertisement advertisement;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
     private Author author;
 
     @Column(name = "create_date")

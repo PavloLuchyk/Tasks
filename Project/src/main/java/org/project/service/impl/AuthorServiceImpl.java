@@ -37,6 +37,7 @@ public class AuthorServiceImpl extends CrudServiceGeneral<Author> implements Aut
     }
 
     @Override
+    @Transactional
     public Author getByEmail(String email) {
         if (email == null) {
             throw new IllegalArgumentException("Email cannot be null");

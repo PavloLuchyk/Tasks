@@ -11,8 +11,11 @@
     <label for="email">Email: </label>
     <input id="email" type="email" formControlName="email" required="required">
     <div *ngIf="!email?.valid&&(email?.touched||email?.dirty)">
-      <div *ngIf="email?.errors">
-        Email is not valid or unique
+      <div *ngIf="!email?.errors?.exists">
+        Email is not unique
+      </div>
+      <div *ngIf="email?.errors?.pattern">
+        Email is not valid
       </div>
     </div>
   </div>

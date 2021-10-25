@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CategoryService} from "../../services/category/category.service";
-import {Category} from "../category";
+import {Category} from "../../models/category";
 import {Router} from "@angular/router";
 import {map} from "rxjs/operators";
 import {compareSegments} from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/segment_marker";

@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import {Category} from "../../category/category";
+import {Category} from "../../models/category";
 import {CATEGORIES} from "../../category/mock-categories";
 import {Observable, of} from "rxjs";
 import {MessageService} from "../message.service"
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/forms";
 import {AppSettings} from "../../constants/AppSettings";
@@ -44,14 +44,15 @@ export class CategoryService {
     return this.http.post<Category>(url, category, this.httpOptions);
   }
 
-  checkUnique(name:string): Observable<boolean> {
-    const url = `${this.categoriesUrl}/check/${name}`;
-    return this.http.get<boolean>(url);
+  isUnique(name:string): Observable<boolean> {
+    const url = `${this.categoriesUrl}/check`;
+    let param = new HttpParams().set("name", name);
+    return this.http.get<boolean>(url, {params: param});
   }
 
   getUniqueValidator() : AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.checkUnique(control.value).pipe(
+      return this.isUnique(control.value).pipe(
         map(isTaken => (!isTaken ? { unique: false } : null)),
         catchError(() => of(null)));
     }

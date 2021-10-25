@@ -71,10 +71,8 @@ public class CategoryController {
         return ResponseEntity.ok("Category with id " + id + " has been deleted");
     }
 
-    @GetMapping("/category/check/{name}")
-    public ResponseEntity<?> checkUnique(@PathVariable("name") String name) {
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("unique", categoryService.checkUnique(name));
+    @GetMapping("/category/check")
+    public ResponseEntity<?> checkUnique(@RequestParam("name") String name) {
         return ResponseEntity.ok(categoryService.checkUnique(name));
     }
 

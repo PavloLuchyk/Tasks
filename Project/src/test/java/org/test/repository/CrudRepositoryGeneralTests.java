@@ -29,13 +29,13 @@ import java.util.List;
 })
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 public class CrudRepositoryGeneralTests {
 
     @Autowired
     private CrudRepository<Category> categoryRepository;
 
     @Test
-    @Transactional
     public void readByIdTest() {
         Category expected = new Category();
         expected.setName("Books");
@@ -47,7 +47,6 @@ public class CrudRepositoryGeneralTests {
     }
 
     @Test
-    @Transactional
     public void createTest() {
         Category expected = new Category();
         expected.setCreateDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
@@ -55,11 +54,9 @@ public class CrudRepositoryGeneralTests {
         expected.setDescription("There are books");
         Long id = Long.parseLong(categoryRepository.create(expected).toString());
         assertEquals(5, id);
-        //categoryRepository.delete(expected.setId(id));
     }
 
     @Test
-    @Transactional
     public void updateTest() {
         Category expected = new Category();
         expected.setCreateDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
@@ -72,7 +69,6 @@ public class CrudRepositoryGeneralTests {
     }
 
     @Test
-    @Transactional
     void deleteTest() {
         long id = Long.parseLong(categoryRepository.create(new Category().setName("Name").setDescription("desc")).toString());
         categoryRepository.delete(categoryRepository.readById(id));
@@ -80,7 +76,6 @@ public class CrudRepositoryGeneralTests {
     }
 
     @Test
-    @Transactional
     public void readAllTest() {
         List<Category> expected = new ArrayList<>();
         Category category = new Category();
@@ -102,7 +97,6 @@ public class CrudRepositoryGeneralTests {
     }
 
     @Test
-    @Transactional
     public void readAllSorted() {
         List<Category> expected = new ArrayList<>();
         Category category1 = new Category().setName("Name1").setDescription("S");
@@ -119,7 +113,6 @@ public class CrudRepositoryGeneralTests {
     }
 
     @Test
-    @Transactional
     public void getAllInPagesTest() {
         long[] ids = new long[31];
         for (int i = 0; i< 31; i++) {

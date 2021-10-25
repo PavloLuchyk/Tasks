@@ -1,0 +1,8 @@
+<h1>{{category?.name}}</h1>
+<p>{{category?.description}}</p>
+<a routerLink="/advertisement/create">Create advertisement</a>
+<ul class="advertisements">
+  <li *ngFor="let advertisement of advertisements">
+    <a routerLink="/advertisement/{{advertisement.id}}">{{advertisement.title}}</a>
+  </li>
+</ul>
