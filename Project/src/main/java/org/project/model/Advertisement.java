@@ -18,10 +18,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "advertisements")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

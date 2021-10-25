@@ -4,6 +4,7 @@
   <li *ngFor="let category of categories">
     <a routerLink="/advertisement/category/{{category.id}}">{{category.name}}</a> |
     <button (click)="deleteCategory(category.id)">Delete</button>
+    <a routerLink="/category/{{category.id}}">Update</a>
   </li>
 </ul>
 

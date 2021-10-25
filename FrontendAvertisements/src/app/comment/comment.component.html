@@ -1,6 +1,6 @@
 <h1>{{advertisement?.title}}</h1>
 <p>{{advertisement?.description}}</p>
-<comment-create [advertisement]="advertisement"></comment-create>
+<comment-create [advertisement]="advertisement" (event)="addComment()"></comment-create>
 <ul class="comments">
   <li *ngFor="let comment of comments">
     <div>

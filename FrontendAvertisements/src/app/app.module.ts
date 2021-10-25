@@ -18,6 +18,7 @@ import {AdvertisementByCategoryComponent} from "./advertisement/advertisement-by
 import {Comment} from "@angular/compiler";
 import {CommentComponent} from "./comment/comment.component";
 import {CommentCreateComponent} from "./comment/comment-create.component";
+import {AdvertisementUpdateComponent} from "./advertisement/advertisement-update.component";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {CommentCreateComponent} from "./comment/comment-create.component";
     AdvertisementCreateComponent,
     AdvertisementByCategoryComponent,
     CommentComponent,
-    CommentCreateComponent
+    CommentCreateComponent,
+    AdvertisementUpdateComponent
   ],
   imports: [
     BrowserModule,

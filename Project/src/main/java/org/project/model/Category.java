@@ -19,10 +19,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "categories")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 public class Category {
 
     @Id

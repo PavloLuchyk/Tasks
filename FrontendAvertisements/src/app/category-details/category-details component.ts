@@ -10,6 +10,7 @@ import {FormControl, FormGroup} from "@angular/forms";
   templateUrl:"./category-details.component.html"
 })
 export class CategoryDetailsComponent implements OnInit{
+
    category?:Category;
 
    updateForm: FormGroup;

@@ -9,18 +9,20 @@ import {AdvertisementComponent} from "./advertisement/advertisement.component";
 import {AdvertisementCreateComponent} from "./advertisement/advertisement-create.component";
 import {AdvertisementByCategoryComponent} from "./advertisement/advertisement-by-category.component";
 import {CommentComponent} from "./comment/comment.component";
+import {AdvertisementUpdateComponent} from "./advertisement/advertisement-update.component";
 
 const routes: Routes = [
   { path: '', redirectTo:'categories', pathMatch:"full"},
   { path: 'categories', component: CategoryComponent },
-  { path: 'details/:id', component: CategoryDetailsComponent },
+  { path: 'category/:id', component: CategoryDetailsComponent },
   { path: 'categories/create', component:CategoryCreateComponent},
   { path: 'register', component:AuthorRegistrationComponent},
   { path: 'login', component: LoginComponent},
   { path: 'advertisement', component:AdvertisementComponent},
   { path: 'advertisement/create', component:AdvertisementCreateComponent},
   { path: 'advertisement/category/:id', component: AdvertisementByCategoryComponent},
-  { path: 'advertisement/:id', component: CommentComponent}
+  { path: 'advertisement/:id', component: CommentComponent},
+  { path: 'advertisement/update/:id', component:AdvertisementUpdateComponent}
 ];
 
 @NgModule({

@@ -5,6 +5,7 @@ export interface Advertisement {
   id: number;
   title: string;
   description: string;
+  createDate: string;
   author: AuthorView;
   category: Category;
 }
