@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {CategoryComponent} from "./category/component/category.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CategoryDetailsComponent} from "./category-details/category-details component";
-import {MessageComponent} from "./message/message.component";
+import {CategoryUpdateComponent} from "./category/category-update/category-update.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {CategoryCreateComponent} from "./category/create/category-create.component";
@@ -15,12 +14,10 @@ import {JwtInterceptor} from "./security/jwt-interseptor";
 import {AdvertisementComponent} from "./advertisement/all/advertisement.component";
 import {AdvertisementCreateComponent} from "./advertisement/advertisement-create/advertisement-create.component";
 import {AdvertisementByCategoryComponent} from "./advertisement/advertisement-by-category/advertisement-by-category.component";
-import {Comment} from "@angular/compiler";
 import {CommentComponent} from "./comment/component/comment.component";
-import {CommentCreateComponent} from "./comment/comment-create.component";
+import {CommentCreateComponent} from "./comment/comment-create/comment-create.component";
 import {AdvertisementUpdateComponent} from "./advertisement/advertisement-update/advertisement-update.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MenuComponent } from './author/menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,7 +35,6 @@ import {MDBBootstrapModule} from "angular-bootstrap-md";
 import { DialogComponent } from './dialog/dialog.component';
 import { AuthorAllComponent } from './author/author-all/author-all.component';
 import { AuthorDetailsComponent } from './author/author-details/author-details.component';
-import { ProfileComponent } from './author/profile/profile.component';
 import { AuthorUpdateComponent } from './author/author-update/author-update.component';
 import { AdvertisementByAuthorComponent } from './advertisement/advertisement-by-author/advertisement-by-author.component';
 import { CommentUpdateComponent } from './comment/comment-update/comment-update.component';
@@ -47,8 +43,7 @@ import { CommentUpdateComponent } from './comment/comment-update/comment-update.
   declarations: [
     AppComponent,
     CategoryComponent,
-    CategoryDetailsComponent,
-    MessageComponent,
+    CategoryUpdateComponent,
     CategoryCreateComponent,
     AuthorRegistrationComponent,
     LoginComponent,
@@ -58,11 +53,9 @@ import { CommentUpdateComponent } from './comment/comment-update/comment-update.
     CommentComponent,
     CommentCreateComponent,
     AdvertisementUpdateComponent,
-    MenuComponent,
     DialogComponent,
     AuthorAllComponent,
     AuthorDetailsComponent,
-    ProfileComponent,
     AuthorUpdateComponent,
     AdvertisementByAuthorComponent,
     CommentUpdateComponent

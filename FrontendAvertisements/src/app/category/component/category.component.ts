@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import {Category} from "../../models/category";
-import {CategoryService} from "../../services/category/category.service";
+import {CategoryService} from "../../services/category.service";
 import {MessageService} from "../../services/message.service";
 import {Advertisement} from "../../models/advertisement";
 import {PageEvent} from "@angular/material/paginator";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {LoginService} from "../../services/category/login.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: "category-name",

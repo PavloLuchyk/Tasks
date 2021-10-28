@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {Advertisement} from "../../models/advertisement";
 import {PageEvent} from "@angular/material/paginator";
 import {ActivatedRoute} from "@angular/router";
-import {CategoryService} from "../../services/category/category.service";
+import {CategoryService} from "../../services/category.service";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {MatDialog} from "@angular/material/dialog";
 import {of} from "rxjs";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {AuthorView} from "../../models/author-view";
-import {AuthorService} from "../../services/category/author.service";
-import {LoginService} from "../../services/category/login.service";
+import {AuthorService} from "../../services/author.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-advertisement-by-author',

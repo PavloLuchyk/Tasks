@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import {Category} from "../../models/category";
+import {Category} from "../models/category";
 import {Observable, of} from "rxjs";
-import {MessageService} from "../message.service"
+import {MessageService} from "./message.service"
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/forms";
-import {AppSettings} from "../../constants/AppSettings";
+import {AppSettings} from "../constants/AppSettings";
 
 @Injectable({
   providedIn:'root'

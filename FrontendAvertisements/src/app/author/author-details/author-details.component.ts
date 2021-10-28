@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthorService} from "../../services/category/author.service";
-import {LoginService} from "../../services/category/login.service";
+import {AuthorService} from "../../services/author.service";
+import {LoginService} from "../../services/login.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthorView} from "../../models/author-view";
 import {DialogComponent} from "../../dialog/dialog.component";

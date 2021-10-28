@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthorService} from "../../services/category/author.service";
+import {AuthorService} from "../../services/author.service";
 import {PageEvent} from "@angular/material/paginator";
 import {AuthorView} from "../../models/author-view";
 import {MatDialog} from "@angular/material/dialog";

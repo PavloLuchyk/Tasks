@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {AppSettings} from "../../constants/AppSettings";
-import {AuthorizationModel} from "../../models/authorization-model";
+import {AppSettings} from "../constants/AppSettings";
+import {AuthorizationModel} from "../models/authorization-model";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Role} from "../../models/Role";
+import {Role} from "../models/Role";
 
 @Injectable({
   providedIn:"root"

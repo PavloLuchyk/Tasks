@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
-import {AppSettings} from "../../constants/AppSettings";
+import {AppSettings} from "../constants/AppSettings";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import {AuthorView} from "../../models/author-view";
-import {AuthorRegistration} from "../../models/author-registration";
+import {AuthorView} from "../models/author-view";
+import {AuthorRegistration} from "../models/author-registration";
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/forms";
 import {catchError, map} from "rxjs/operators";
 import {LoginService} from "./login.service";

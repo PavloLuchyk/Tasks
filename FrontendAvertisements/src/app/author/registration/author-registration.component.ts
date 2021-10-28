@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthorService} from "../../services/category/author.service";
+import {AuthorService} from "../../services/author.service";
 import {AuthorRegistration} from "../../models/author-registration";
 
 @Component({

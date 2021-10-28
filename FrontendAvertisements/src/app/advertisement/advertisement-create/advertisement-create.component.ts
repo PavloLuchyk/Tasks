@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AdvertisementService} from "../../services/advertisement.service";
-import {LoginService} from "../../services/category/login.service";
+import {LoginService} from "../../services/login.service";
 import {Category} from "../../models/category";
 import {AuthorView} from "../../models/author-view";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CategoryService} from "../../services/category/category.service";
-import {AuthorService} from "../../services/category/author.service";
+import {CategoryService} from "../../services/category.service";
+import {AuthorService} from "../../services/author.service";
 import {delay} from "rxjs/operators";
 
 @Component({

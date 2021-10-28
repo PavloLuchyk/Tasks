@@ -1,4 +1,4 @@
-import {LoginService} from "../services/category/login.service";
+import {LoginService} from "../services/login.service";
 
 export class AuthHelper {
   constructor(private loginService: LoginService) {

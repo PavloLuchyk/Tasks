@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthorService} from "../../services/category/author.service";
+import {AuthorService} from "../../services/author.service";
 import {Router} from "@angular/router";
-import {LoginService} from "../../services/category/login.service";
+import {LoginService} from "../../services/login.service";
 import {AuthorView} from "../../models/author-view";
 
 @Component({

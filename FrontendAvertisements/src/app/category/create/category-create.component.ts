@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CategoryService} from "../../services/category/category.service";
+import {CategoryService} from "../../services/category.service";
 import {Category} from "../../models/category";
 import {Router} from "@angular/router";
 import {map} from "rxjs/operators";

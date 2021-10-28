@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {LoginService} from "../services/category/login.service";
+import {LoginService} from "../services/login.service";
 import {Observable} from "rxjs";
 import {AppSettings} from "../constants/AppSettings";
 

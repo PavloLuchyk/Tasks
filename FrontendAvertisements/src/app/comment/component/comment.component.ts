@@ -6,7 +6,7 @@ import {Comment} from "../../models/comment";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {PageEvent} from "@angular/material/paginator";
 import {of} from "rxjs";
-import {LoginService} from "../../services/category/login.service";
+import {LoginService} from "../../services/login.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {CommentUpdateComponent} from "../comment-update/comment-update.component";

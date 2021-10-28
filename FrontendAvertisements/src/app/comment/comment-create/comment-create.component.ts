@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {CommentService} from "../services/comment.service";
+import {CommentService} from "../../services/comment.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../services/category/login.service";
-import {AuthorService} from "../services/category/author.service";
-import {AuthorView} from "../models/author-view";
-import {Advertisement} from "../models/advertisement";
-import {Comment} from "../models/comment";
+import {LoginService} from "../../services/login.service";
+import {AuthorService} from "../../services/author.service";
+import {AuthorView} from "../../models/author-view";
+import {Advertisement} from "../../models/advertisement";
+import {Comment} from "../../models/comment";
 
 @Component({
   selector: 'comment-create',

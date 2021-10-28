@@ -1,16 +1,16 @@
 import {Component, OnInit, Input} from "@angular/core";
-import {Category} from "../models/category";
+import {Category} from "../../models/category";
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import {CategoryService} from "../services/category/category.service";
+import {CategoryService} from "../../services/category.service";
 import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector:"category-details",
-  templateUrl:"./category-details.component.html",
-  styleUrls: ["./category-details.component.css"]
+  templateUrl:"./category-update.component.html",
+  styleUrls: ["./category-update.component.css"]
 })
-export class CategoryDetailsComponent implements OnInit{
+export class CategoryUpdateComponent implements OnInit{
 
    category?:Category;
 

@@ -4,7 +4,7 @@ import {Advertisement} from "../../models/advertisement";
 import {PageEvent} from "@angular/material/paginator";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {LoginService} from "../../services/category/login.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector:'advertisements',

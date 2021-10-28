@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from "@angular/core";
-import {CategoryService} from "../../services/category/category.service";
+import {CategoryService} from "../../services/category.service";
 import {AdvertisementService} from "../../services/advertisement.service";
 import {Category} from "../../models/category";
 import {Advertisement} from "../../models/advertisement";
@@ -8,7 +8,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DialogComponent} from "../../dialog/dialog.component";
-import {LoginService} from "../../services/category/login.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector:'advertisement-by-component',
