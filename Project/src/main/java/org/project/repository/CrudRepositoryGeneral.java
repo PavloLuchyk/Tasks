@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -76,25 +77,24 @@ public abstract class CrudRepositoryGeneral<T> implements CrudRepository<T>{
     }
 
     @Override
-    public Map<Integer, List<T>> getAllInPages(PageSize pageSize) {
+    public List<T> getAllInPages(PageSize pageSize, int pageNumber) {
         CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
-        Map<Integer, List<T>> pages = new TreeMap<>();
-        int pageNumber = 1;
-        int offset = 0;
-        CriteriaQuery<Long> pageCriteriaQuery = cb.createQuery(Long.class);
-        pageCriteriaQuery.select(cb.count(pageCriteriaQuery.from(clazz)));
-        long totalNumber = sessionFactory.getCurrentSession().createQuery(pageCriteriaQuery).getSingleResult();
+        int offset = pageNumber*pageSize.size;
         CriteriaQuery<T> criteriaQuery = cb.createQuery(clazz);
         Root<T> from = criteriaQuery.from(clazz);
         CriteriaQuery<T> select = criteriaQuery.select(from);
         TypedQuery<T> typedQuery = sessionFactory.getCurrentSession().createQuery(select);
-        while (offset < totalNumber) {
-            typedQuery.setFirstResult(offset);
-            typedQuery.setMaxResults(pageSize.size);
-            pages.put(pageNumber, typedQuery.getResultList());
-            offset += pageSize.size;
-            pageNumber++;
-        }
-        return pages;
+        typedQuery.setFirstResult(offset);
+        typedQuery.setMaxResults(pageSize.size);
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    public Long getCountOfAllPages(PageSize pageSize) {
+        CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<Long> pageCriteriaQuery = cb.createQuery(Long.class);
+        pageCriteriaQuery.select(cb.count(pageCriteriaQuery.from(clazz)));
+        long totalNumber = sessionFactory.getCurrentSession().createQuery(pageCriteriaQuery).getSingleResult();
+        return totalNumber;
     }
 }

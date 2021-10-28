@@ -9,6 +9,8 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
 
+  hide = true;
+
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
@@ -24,10 +26,6 @@ export class LoginComponent {
       this.loginForm.get('password')?.value
     ).subscribe();
     this.router.navigate(['/']);
-  }
-
-  getUser(){
-    console.log(localStorage.getItem('user'));
   }
 
 }

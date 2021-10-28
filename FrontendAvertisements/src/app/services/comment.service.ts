@@ -11,7 +11,7 @@ import {Comment} from "../models/comment";
 export class CommentService {
   private commentsUrl: string = `${AppSettings.API_ENDPOINT}/comment`;
 
-  advertisement?: Advertisement;
+  advertisement?: Observable<Advertisement | undefined>;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -44,6 +44,16 @@ export class CommentService {
   saveComment(comment: Comment): Observable<Comment> {
     const url = `${this.commentsUrl}/add`;
     return this.http.post<Comment>(url, comment, this.httpOptions);
+  }
+
+  getCommentsInPages(id: number, parent: string, pageSize:number, pageNumber:number): Observable<Comment[]> {
+    const url = `${this.commentsUrl}/${parent}/${id}/${pageSize}/${pageNumber}`;
+    return this.http.get<Comment[]>(url);
+  }
+
+  getTotalAmountOfPages(id: number, parent: string, pageSize:number): Observable<number> {
+    const url = `${this.commentsUrl}/${parent}/${id}/${pageSize}`;
+    return this.http.get<number>(url);
   }
 
   constructor(private http: HttpClient) { }

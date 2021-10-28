@@ -1,6 +1,7 @@
 package org.project.controller;
 
 import org.project.model.Advertisement;
+import org.project.model.Comment;
 import org.project.service.AdvertisementService;
 import org.project.enums.PageSize;
 import org.project.enums.SortingOrder;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins="*", maxAge=3600)
+@CrossOrigin(origins="*")
 @RestController
 public class AdvertisementController {
     
@@ -42,10 +43,15 @@ public class AdvertisementController {
         return ResponseEntity.ok(advertisements);
     }
 
-    @GetMapping("/advertisement/pages/{number}")
-    public ResponseEntity<Map<Integer, List<Advertisement>>> getAllInPages(@PathVariable int number) {
-        Map<Integer, List<Advertisement>> pages = advertisementService.getAllInPages(PageSize.getFromSize(number));
-        return ResponseEntity.ok(pages);
+    @GetMapping("/advertisement/page/{number}/{pageNumber}")
+    public ResponseEntity<List<Advertisement>> getAllInPages(@PathVariable int number,@PathVariable int pageNumber) {
+        List<Advertisement> page = advertisementService.getAllInPages(PageSize.getFromSize(number), pageNumber);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/advertisement/page/{number}")
+    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+        return ResponseEntity.ok(advertisementService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
     @GetMapping("/advertisement")
@@ -54,9 +60,30 @@ public class AdvertisementController {
         return ResponseEntity.ok(advertisements);
     }
     
-    @GetMapping("/advertisement/{parent}/{id}")
+    @GetMapping("/advertisement/parent/{parent}/{id}")
     public ResponseEntity<List<Advertisement>> getAllByParent(@PathVariable String parent, @PathVariable long id) {
         List<Advertisement> advertisements = advertisementService.getAllByParentId(id, parent);
+        return ResponseEntity.ok(advertisements);
+    }
+
+    @GetMapping("/advertisement/parent/{parent}/{id}/{pageSize}/{pageNumber}")
+    public ResponseEntity<List<Advertisement>> getAllByParentInPages(@PathVariable String parent,
+                                                               @PathVariable long id,
+                                                               @PathVariable int pageSize,
+                                                               @PathVariable int pageNumber) {
+        List<Advertisement> comments = advertisementService.getAllByParentIdInPages(
+                id,
+                parent,
+                PageSize.getFromSize(pageSize),
+                pageNumber);
+        return ResponseEntity.ok(comments);
+    }
+
+    @GetMapping("/advertisement/parent/{parent}/{id}/{pageSize}")
+    public ResponseEntity<Long> getTotalCountOfPages(@PathVariable String parent,
+                                                     @PathVariable long id,
+                                                     @PathVariable int pageSize) {
+        Long advertisements = advertisementService.getTotalCountOfPages(id,parent,PageSize.getFromSize(pageSize));
         return ResponseEntity.ok(advertisements);
     }
 
@@ -71,7 +98,7 @@ public class AdvertisementController {
     @DeleteMapping("/advertisement/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or @advertisementController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        advertisementService.delete(new Advertisement().setId(id));
+        advertisementService.delete(advertisementService.readById(id));
         return ResponseEntity.ok("advertisement with id " + id + " has been deleted");
     }
 

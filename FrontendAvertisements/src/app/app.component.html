@@ -1,8 +1,28 @@
-<nav>
-  <a routerLink="/categories">Categories</a> |
-  <a routerLink="/register" *ngIf="!isLogged()">Register</a> |
-  <a routerLink="/login" *ngIf="!isLogged()">Login</a> |
-  <button *ngIf="isLogged()" (click)="logout()">Log out</button>
-</nav>
+<mat-toolbar class="menu-navbar mat-primary">
+    <div fxLayout.xs="column">
+      <a mat-button class="menu-button"
+         routerLink="/categories" routerLinkActive="menu-button-active"
+         [routerLinkActiveOptions]="{exact:true}">Categories</a>
+      <a mat-button class="menu-button"
+         routerLinkActive="menu-button-active"
+         [routerLinkActiveOptions]="{exact:true}"
+         routerLink="/advertisement">Advertisements</a>
+      <a mat-button class="menu-button"
+         routerLinkActive="menu-button-active"
+         [routerLinkActiveOptions]="{exact:true}"
+         routerLink="/author" *ngIf="isAdmin()">Authors</a>
+    </div>
+    <div class="auth" fxLayout.xs="column">
+      <a mat-button class="menu-button" routerLink="/register"
+         routerLinkActive="menu-button-active"
+         [routerLinkActiveOptions]="{exact:true}"
+         *ngIf="!isLogged()">Register</a>
+      <a mat-button routerLink="/login" class="menu-button"
+         routerLinkActive="menu-button-active"
+         [routerLinkActiveOptions]="{exact:true}"
+         *ngIf="!isLogged()">Login</a>
+      <a mat-button routerLink="/author/{{this.id}}" class="menu-button" *ngIf="isLogged()">Profile</a>
+      <button mat-button *ngIf="isLogged()" (click)="logout()">Log out</button>
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>
-<app-messages></app-messages>

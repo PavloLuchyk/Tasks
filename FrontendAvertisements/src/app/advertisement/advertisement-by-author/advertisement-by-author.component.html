@@ -1,0 +1,34 @@
+<div fxLayout="column">
+  <br/>
+  <div fxLayout="row" fxLayoutGap="16px">
+    <h1>{{authorView?.firstName + " " + authorView?.lastName}} advertisements</h1>
+    <a mat-raised-button color="primary" routerLink="/advertisement/create"
+       fxFlexAlign="start" fxLayoutAlign="end" dir="rtl" *ngIf="isOwner()">Create advertisement</a>
+  </div>
+  <br/>
+  <ul class="advertisements" fxLayoutGap="1%" fxLayout="column">
+    <li *ngFor="let advertisement of advertisements" class="item"
+        fxLayoutAlign="space-between" fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5%">
+        <a routerLink="/advertisement/{{advertisement.id}}"
+           class="text-black h4"
+           [fxFlex]="'auto'">{{advertisement.title}}</a>
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5%" *ngIf="isOwner()||isAdmin()">
+          <a mat-flat-button routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
+          <button mat-raised-button color="warn" (click)="deleteAdvertisement(advertisement.id, advertisement.title)"
+          >Delete</button>
+        </div>
+      </div>
+      <p>Category: <a
+        routerLink="{{advertisement.category ? '/advertisement/category/' + advertisement.category.id : ''}}"
+      > {{advertisement.category ? advertisement.category.name : 'none'}}</a></p>
+      <mat-divider></mat-divider>
+    </li>
+  </ul>
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[15, 30, 45, 60]"
+                 (page)="pageEvent = getPages($event)"
+  ></mat-paginator>
+
+</div>

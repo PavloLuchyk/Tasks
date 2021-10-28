@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+  <h1 matLine>Create new advertisement</h1>
+  <form [formGroup]="advertisementForm" (ngSubmit)="onSubmit()" class="update-form">
+    <div>
+      <mat-form-field appearance="fill" class="max-width">
+        <mat-label for="title">Title: </mat-label>
+        <input matInput formControlName="title" id="title" type="text">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="max-width">
+        <mat-label for="description">Description: </mat-label>
+        <textarea matInput formControlName="description" id="description" type="text">
+
+      </textarea>
+      </mat-form-field>
+    </div>
+    <div *ngIf="!category" class="max-width">
+      <mat-form-field appearance="fill">
+        <mat-label for="category">Select category</mat-label>
+        <mat-select id="category" formControlName="category" [(value)]="selected">
+          <mat-option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <input type="submit" value="Create" class="mat-raised-button mat-primary">
+  </form>
+</div>

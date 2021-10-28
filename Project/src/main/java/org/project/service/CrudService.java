@@ -14,5 +14,6 @@ public interface CrudService<T> {
     void delete(T element);
     T create(T element);
     T update(T element);
-    Map<Integer, List<T>> getAllInPages(PageSize pageSize);
+    List<T> getAllInPages(PageSize pageSize, int pageNumber);
+    Long getCountOfAllPages(PageSize pageSize);
 }

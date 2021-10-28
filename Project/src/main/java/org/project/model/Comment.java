@@ -1,5 +1,6 @@
 package org.project.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,8 +32,7 @@ public class Comment {
     private Author author;
 
     @Column(name = "create_date")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @CreationTimestamp
     private LocalDateTime createDate;
 

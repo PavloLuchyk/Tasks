@@ -1,0 +1,31 @@
+<div class="category d-flex flex-column align-items-center" >
+  <br/>
+  <div class="info flex-row justify-content-center align-items-center">
+    <h1>{{category?.name}}</h1>
+    <a mat-raised-button color="primary" routerLink="/advertisement/create"
+      *ngIf="isLogged()" >Create advertisement</a>
+  </div>
+  <h3>Description: </h3>
+  <br/>
+  <p>{{category?.description}}</p>
+  <mat-divider></mat-divider>
+  <ul class="advertisements">
+    <li *ngFor="let advertisement of advertisements" class="item d-flex justify-content-between">
+      <a routerLink="/advertisement/{{advertisement.id}}"
+         class="text-black h4"
+         >{{advertisement.title}}</a>
+      <div class="d-flex flex-row justify-content-between" *ngIf="isAdmin()">
+        <a mat-stroked-button routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
+        <button mat-raised-button color="warn" (click)="deleteAdvertisement(advertisement.id, advertisement.title)"
+        >Delete</button>
+      </div>
+      <mat-divider></mat-divider>
+    </li>
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[15, 30, 45, 60]"
+                   (page)="pageEvent = getPages($event)"
+    ></mat-paginator>
+  </ul>
+</div>
+

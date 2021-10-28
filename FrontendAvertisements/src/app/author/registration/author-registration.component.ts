@@ -6,10 +6,13 @@ import {AuthorRegistration} from "../../models/author-registration";
 
 @Component({
   selector:"author-registration",
-  templateUrl:"author-registration.component.html"
+  templateUrl:"author-registration.component.html",
+  styleUrls: ['author-registration.component.css']
 })
 export class AuthorRegistrationComponent {
 
+
+  hide = true;
   private author?:AuthorRegistration;
 
     authorForm = new FormGroup({
@@ -32,7 +35,7 @@ export class AuthorRegistrationComponent {
   onSubmit(): void {
     this.authorService.saveAuthor(this.authorForm.value)
       .subscribe(author =>this.author =author);
-    this.router.navigateByUrl("/categories");
+    this.router.navigateByUrl("/login");
   }
 
   get email() {

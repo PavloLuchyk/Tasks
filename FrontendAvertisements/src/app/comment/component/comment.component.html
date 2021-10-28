@@ -1,0 +1,30 @@
+<div class="d-flex flex-column align-items-center">
+  <h1 class="h1">{{advertisement?.title}}</h1>
+  <p class="text-body">{{advertisement?.description}}</p>
+  <a mat-flat-button color="primary" *ngIf="isOwner(advertisement?.author?.id!)||isAdmin()"
+     routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
+  <comment-create [advertisement]="advertisement" (event)="addComment()"
+  *ngIf="isLogged()"></comment-create>
+  <div >
+    <ul class="comments">
+      <li *ngFor="let comment of comments" class="item-container">
+          <mat-divider></mat-divider>
+          <div>
+              <a class="text-black" routerLink="/author/{{comment.author.id}}">
+                {{comment.author.firstName + " " + comment.author.lastName}}
+              </a>
+              <span>{{comment.createDate}}</span>
+              <button mat-raised-button color="warn" (click)="deleteComment(comment.id)"
+                      *ngIf="isOwner(comment.author.id!)||isAdmin()">Delete</button>
+          </div>
+          <p class="text-body">{{comment.text}}</p>
+          <mat-divider></mat-divider>
+      </li>
+    </ul>
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[15, 30, 45, 60]"
+                   (page)="pageEvent = getPages($event)"
+    ></mat-paginator>
+  </div>
+</div>

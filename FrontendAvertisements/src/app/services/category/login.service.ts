@@ -5,6 +5,7 @@ import {AuthorizationModel} from "../../models/authorization-model";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
+import {Role} from "../../models/Role";
 
 @Injectable({
   providedIn:"root"
@@ -39,6 +40,24 @@ export class LoginService{
     localStorage.removeItem('user');
     this.authorSubject.next(null!);
     this.router.navigate(['/']);
+  }
+
+  get isLogged() {
+    const user = this.userValue;
+    if (user && user.token) {
+      return true;
+    }
+    return false;
+  }
+
+  get isAdmin() {
+    const user = this.userValue;
+    if (this.isLogged) {
+      if (user.role === Role.ADMIN) {
+        return true;
+      }
+    }
+    return false;
   }
 
 

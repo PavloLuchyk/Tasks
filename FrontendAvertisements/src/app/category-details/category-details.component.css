@@ -1,0 +1,13 @@
+.category {
+  margin: 5% 30%;
+}
+
+.create-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.max-width {
+  width: 100%;
+}

@@ -1,5 +1,6 @@
 package org.project.service.impl;
 
+import org.project.enums.PageSize;
 import org.project.model.Comment;
 import org.project.repository.CommentRepository;
 import org.project.service.CommentService;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class CommentServiceImpl extends CrudServiceGeneral<Comment> implements CommentService {
 
     private final CommentRepository commentRepository;
@@ -34,5 +35,15 @@ public class CommentServiceImpl extends CrudServiceGeneral<Comment> implements C
     @Override
     public List<Comment> getAllByParentId(long parentId, String parentName) {
         return commentRepository.getAllByParentId(parentId, parentName);
+    }
+
+    @Override
+    public List<Comment> getAllByParentIdInPages(long parentId, String parentName, PageSize pageSize, int pageNumber) {
+        return commentRepository.getAllByParentIdInPages(parentId, parentName, pageSize, pageNumber);
+    }
+
+    @Override
+    public Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
+        return commentRepository.getTotalCountOfPages(parentId,parentName,pageSize);
     }
 }

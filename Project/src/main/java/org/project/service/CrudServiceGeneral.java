@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@Transactional
+
 @Service
+@Transactional(readOnly = true)
 public abstract class CrudServiceGeneral<T> implements CrudService<T> {
 
     private CrudRepository<T> crudRepository;
@@ -58,10 +59,18 @@ public abstract class CrudServiceGeneral<T> implements CrudService<T> {
     }
 
     @Override
-    public Map<Integer, List<T>> getAllInPages(PageSize pageSize) {
+    public List<T> getAllInPages(PageSize pageSize, int pageNumber) {
         if (pageSize == null) {
-            throw new IllegalArgumentException("Page size cannot be null!");
+            throw new IllegalArgumentException("Page size cannot be null or less than 1!");
         }
-        return crudRepository.getAllInPages(pageSize);
+        return crudRepository.getAllInPages(pageSize, pageNumber);
+    }
+
+    @Override
+    public Long getCountOfAllPages(PageSize pageSize) {
+        if (pageSize == null) {
+            throw new IllegalArgumentException("Page size cannot be null or less than 1!");
+        }
+        return crudRepository.getCountOfAllPages(pageSize);
     }
 }

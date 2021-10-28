@@ -44,10 +44,15 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping("/category/pages/{number}")
-    public ResponseEntity<Map<Integer, List<Category>>> getAllInPages(@PathVariable int number) {
-        Map<Integer, List<Category>> pages = categoryService.getAllInPages(PageSize.getFromSize(number));
+    @GetMapping("/category/pages/{number}/{pageNumber}")
+    public ResponseEntity<List<Category>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
+        List<Category> pages = categoryService.getAllInPages(PageSize.getFromSize(number),pageNumber);
         return ResponseEntity.ok(pages);
+    }
+
+    @GetMapping("/category/pages/{number}")
+    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+        return ResponseEntity.ok(categoryService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
     @GetMapping("/category")

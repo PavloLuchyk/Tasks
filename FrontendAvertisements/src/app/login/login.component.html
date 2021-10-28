@@ -1,12 +1,23 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <input type="email" placeholder="email" required="required" formControlName="email">
-  </div>
-  <div>
-    <input type="password" placeholder="password" required="required" formControlName="password">
-  </div>
-  <div>
-    <input type="submit" value="Login" [disabled]="!loginForm.valid">
-  </div>
-</form>
-<button (click)="getUser()">Click</button>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <h1 matLine>Sign in</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <div>
+      <mat-form-field appearance="fill" class="max-width">
+        <input matInput type="email" placeholder="email" required="required" formControlName="email">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="max-width">
+        <input matInput placeholder="password" required="required" formControlName="password"
+               [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"
+        form="none">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div>
+      <input type="submit" value="Login" [disabled]="!loginForm.valid" class="mat-raised-button mat-primary">
+    </div>
+  </form>
+</div>

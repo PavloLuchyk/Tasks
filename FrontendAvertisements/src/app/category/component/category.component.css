@@ -1,0 +1,19 @@
+.info {
+  padding: 2%;
+}
+
+.mat-divider {
+  display: block;
+  margin: 0;
+  border-top-width: 3px;
+  border-top-style: solid;
+}
+
+.item {
+  min-width: 150px;
+  max-width: 500px;
+}
+
+.item:hover {
+  background-color: lightgray;
+}

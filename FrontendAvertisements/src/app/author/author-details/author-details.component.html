@@ -1,0 +1,19 @@
+<div class="d-flex flex-column align-items-center">
+  <br/>
+  <h1>{{!isOwner() ? author?.firstName+" " + author?.lastName + "'s details": "My Profile"}}</h1>
+  <a  mat-raised-button color="accent"
+      routerLink="/author/update/{{author?.id}}"
+  *ngIf="isOwner()">Update</a>
+  <mat-divider></mat-divider>
+  <p>First name: {{author?.firstName}}</p>
+  <p>Last name: {{author?.lastName}}</p>
+  <p>Email: {{author?.email}}</p>
+  <p>Create date: {{author?.createDate}}</p>
+  <p>Role: {{author?.role}}</p>
+  <mat-divider></mat-divider>
+  <a  mat-raised-button color="primary"
+      routerLink="/advertisement/author/{{author?.id}}">{{!isOwner()?
+    author?.firstName+" "+author?.lastName+ "'s advertisements ":
+    "Manage advertisements"
+    }}</a>
+</div>

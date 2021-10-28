@@ -43,4 +43,11 @@ public class AuthorRepositoryImpl extends CrudRepositoryGeneral<Author> implemen
         }
         return false;
     }
+
+    @Override
+    public String getPasswordById(long id) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select a.password from Author a where a.id="+id,String.class)
+                .getSingleResult();
+    }
 }

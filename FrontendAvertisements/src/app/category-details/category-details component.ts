@@ -7,7 +7,8 @@ import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector:"category-details",
-  templateUrl:"./category-details.component.html"
+  templateUrl:"./category-details.component.html",
+  styleUrls: ["./category-details.component.css"]
 })
 export class CategoryDetailsComponent implements OnInit{
 

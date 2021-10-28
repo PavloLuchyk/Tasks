@@ -1,0 +1,15 @@
+.menu-navbar {
+  justify-content: space-between;
+}
+
+.auth > a,button {
+  padding-right: 1rem;
+}
+
+.menu-button:hover {
+  color: white;
+}
+
+.menu-button-active {
+  background-color: blue;
+}

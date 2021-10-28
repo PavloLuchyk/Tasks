@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import {Category} from "../../models/category";
-import {CATEGORIES} from "../../category/mock-categories";
 import {Observable, of} from "rxjs";
 import {MessageService} from "../message.service"
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
@@ -44,6 +43,16 @@ export class CategoryService {
     return this.http.post<Category>(url, category, this.httpOptions);
   }
 
+  getCategoryInPages(pageSize:number, pageNumber:number): Observable<Category[]> {
+    const url = `${this.categoriesUrl}/pages/${pageSize}/${pageNumber}`;
+    return this.http.get<Category[]>(url);
+  }
+
+  getTotalAmountOfPages(pageSize:number): Observable<number> {
+    const url = `${this.categoriesUrl}/pages/${pageSize}`;
+    return this.http.get<number>(url);
+  }
+
   isUnique(name:string): Observable<boolean> {
     const url = `${this.categoriesUrl}/check`;
     let param = new HttpParams().set("name", name);
@@ -53,7 +62,7 @@ export class CategoryService {
   getUniqueValidator() : AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.isUnique(control.value).pipe(
-        map(isTaken => (!isTaken ? { unique: false } : null)),
+        map(isTaken => (!isTaken ? { notUnique: true } : null)),
         catchError(() => of(null)));
     }
   }

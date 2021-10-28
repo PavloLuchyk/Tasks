@@ -6,6 +6,7 @@ import {AuthorView} from "../../models/author-view";
 import {AuthorRegistration} from "../../models/author-registration";
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/forms";
 import {catchError, map} from "rxjs/operators";
+import {LoginService} from "./login.service";
 
 @Injectable({
     providedIn:'root'
@@ -17,6 +18,7 @@ export class AuthorService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+
 
   getAuthors(): Observable<AuthorView[]> {
     return this.http.get<AuthorView[]>(this.authorUrl);
@@ -47,20 +49,42 @@ export class AuthorService {
     return this.http.post<AuthorRegistration>(url, author, this.httpOptions);
   }
 
+  getAuthorsInPages(pageSize: number, pageNumber:number): Observable<AuthorView[]> {
+    const url = `${this.authorUrl}/pages/${pageSize}/${pageNumber}`;
+    return this.http.get<AuthorView[]>(url);
+  }
+
+  getTotalNumberOfPages(pageSize: number): Observable<number> {
+    const url = `${this.authorUrl}/pages/${pageSize}`;
+    return this.http.get<number>(url);
+  }
+
   isUnique(email: string): Observable<boolean> {
     const url = `${this.authorUrl}/check`;
     let param = new HttpParams().set("email", email);
     return this.http.get<boolean>(url, {params: param});
   }
 
+  isIdentical(password: string, id: number): Observable<boolean> {
+    const url =`${this.authorUrl}/check/password`
+    return this.http.post<boolean>(url, {password, id}, this.httpOptions)
+  }
+
   getUniqueValidator() : AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const user = this.loginService.userValue;
+      if (user) {
+        if (user.username == control.value){
+          return of(null);
+        }
+      }
       return this.isUnique(control.value).pipe(
-        map(isTaken => (!isTaken ? { exists: false } : null)),
+        map(isTaken => (!isTaken ? { exists: true } : null)),
         catchError(() => of(null)));
     }
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+             private loginService: LoginService) {
   }
 }

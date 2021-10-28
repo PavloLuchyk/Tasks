@@ -1,17 +1,27 @@
-<button (click)="goBack()">Go back</button>
-<div *ngIf="category">
-  <h1>{{category.name | uppercase}} details</h1>
-  <form [formGroup]="updateForm" (ngSubmit)="save()">
-    <div>
-      <label for="title">Title: </label>
-      <input type="text" id="title" formControlName="name" >
+<div fxFlex="100%" fxFlexAlign="center center" class="category">
+  <div *ngIf="category">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1%">
+      <button mat-raised-button color="accent" (click)="goBack()" fxFlex="20%" fxFlexAlign="flex-start"
+      >Go back</button>
+      <h1 fxFlex="80%">Update category {{category.name | uppercase}}</h1>
     </div>
-    <div>
-      <label for="description">Description: </label>
-      <input type="text" id="description" formControlName="description">
-    </div>
-    <p>Created at: {{category.createDate}}</p>
-    <input type="submit" value="Update">
-  </form>
+    <form [formGroup]="updateForm" (ngSubmit)="save()" class="create-form">
+      <div>
+        <mat-form-field class="max-width" appearance="fill">
+          <mat-label for="title">Title: </mat-label>
+          <input matInput type="text" id="title" formControlName="name" >
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="max-width" appearance="fill">
+          <mat-label for="description">Description: </mat-label>
+          <textarea matInput type="text" id="description" formControlName="description">
+        </textarea>
+        </mat-form-field>
+      </div>
+      <p class="mat-body">Created at: {{category.createDate}}</p>
+      <input class="mat-raised-button mat-primary" type="submit" value="Update">
+    </form>
+  </div>
 </div>
 

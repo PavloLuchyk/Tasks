@@ -7,6 +7,7 @@ import org.project.enums.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,10 +43,15 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
-    @GetMapping("/comment/pages/{number}")
-    public ResponseEntity<Map<Integer, List<Comment>>> getAllInPages(@PathVariable int number) {
-        Map<Integer, List<Comment>> pages = commentService.getAllInPages(PageSize.getFromSize(number));
+    @GetMapping("/comment/pages/{number}/{pageNumber}")
+    public ResponseEntity<List<Comment>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
+        List<Comment> pages = commentService.getAllInPages(PageSize.getFromSize(number), pageNumber);
         return ResponseEntity.ok(pages);
+    }
+
+    @GetMapping("/comment/pages/{number}")
+    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+        return ResponseEntity.ok(commentService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
     @GetMapping("/comment")
@@ -60,6 +66,22 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
+    @GetMapping("/comment/{parent}/{id}/{pageSize}/{pageNumber}")
+    public ResponseEntity<List<Comment>> getAllByParentInPages(@PathVariable String parent,
+                                                               @PathVariable long id,
+                                                               @PathVariable int pageSize,
+                                                               @PathVariable int pageNumber) {
+        List<Comment> comments = commentService.getAllByParentIdInPages(id, parent,PageSize.getFromSize(pageSize), pageNumber);
+        return ResponseEntity.ok(comments);
+    }
+    @GetMapping("/comment/{parent}/{id}/{pageSize}")
+    public ResponseEntity<Long> getTotalCountOfPages(@PathVariable String parent,
+                                                              @PathVariable long id,
+                                                              @PathVariable int pageSize) {
+        Long comments = commentService.getTotalCountOfPages(id,parent,PageSize.getFromSize(pageSize));
+        return ResponseEntity.ok(comments);
+    }
+
     @PutMapping("/comment/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or @commentController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<Comment> update(@PathVariable("id") long id, @RequestBody Comment comment) {
@@ -71,7 +93,7 @@ public class CommentController {
     @DeleteMapping("/comment/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or @commentController.isOwner(#id, authentication.principal.id)")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        commentService.delete(new Comment().setId(id));
+        commentService.delete(commentService.readById(id));
         return ResponseEntity.ok("comment with id " + id + " has been deleted");
     }
 

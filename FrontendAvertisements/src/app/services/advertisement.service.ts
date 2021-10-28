@@ -1,6 +1,6 @@
 import {AppSettings} from "../constants/AppSettings";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Advertisement} from "../models/advertisement";
 import {Injectable} from "@angular/core";
 import {Category} from "../models/category";
@@ -11,7 +11,7 @@ import {Category} from "../models/category";
 export class AdvertisementService {
   private advertisementsUrl: string = `${AppSettings.API_ENDPOINT}/advertisement`;
 
-  category?: Category;
+  category?: Observable<Category | undefined>;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -44,6 +44,26 @@ export class AdvertisementService {
   saveAdvertisement(advertisement:Advertisement): Observable<Advertisement> {
     const url = `${this.advertisementsUrl}/add`;
     return this.http.post<Advertisement>(url, advertisement, this.httpOptions);
+  }
+
+  getAllAdvertisementInPages(pageSize:number, pageNumber:number): Observable<Advertisement[]> {
+    const url = `${this.advertisementsUrl}/page/${pageSize}/${pageNumber}`;
+    return this.http.get<Advertisement[]>(url);
+  }
+
+  getNumberOfAllAdvertisements(pageSize:number): Observable<number> {
+    const url = `${this.advertisementsUrl}/page/${pageSize}`;
+    return this.http.get<number>(url);
+  }
+
+  getAdvertisementInPages(id: number, parent: string, pageSize:number, pageNumber:number): Observable<Advertisement[]> {
+    const url = `${this.advertisementsUrl}/parent/${parent}/${id}/${pageSize}/${pageNumber}`;
+    return this.http.get<Advertisement[]>(url);
+  }
+
+  getTotalAmountOfPages(id: number, parent: string, pageSize:number): Observable<number> {
+    const url = `${this.advertisementsUrl}/parent/${parent}/${id}/${pageSize}`;
+    return this.http.get<number>(url);
   }
 
   constructor(private http: HttpClient) { }

@@ -49,11 +49,17 @@ public class AuthorController {
         return ResponseEntity.ok(authors);
     }
 
+    @GetMapping("/author/pages/{number}/{pageNumber}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<Author>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
+        List<Author> page = authorService.getAllInPages(PageSize.getFromSize(number), pageNumber);
+        return ResponseEntity.ok(page);
+    }
+
     @GetMapping("/author/pages/{number}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<Integer, List<Author>>> getAllInPages(@PathVariable int number) {
-        Map<Integer, List<Author>> pages = authorService.getAllInPages(PageSize.getFromSize(number));
-        return ResponseEntity.ok(pages);
+    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+        return ResponseEntity.ok(authorService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
     @GetMapping("/author")
@@ -83,5 +89,10 @@ public class AuthorController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("unique", authorService.checkUnique(name));
         return ResponseEntity.ok(authorService.checkUnique(name));
+    }
+
+    @PostMapping("/author/check/password")
+    public ResponseEntity<Boolean> isIdentical(@RequestBody Author author) {
+        return ResponseEntity.ok(authorService.isIdentical(author.getPassword(),author.getId()));
     }
 }

@@ -1,18 +1,29 @@
-<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">Title: </label>
-    <input id="title" type="text" formControlName="name" required>
-    <div *ngIf="!(name?.valid)&&(name?.dirty||name?.touched)">
-      <div *ngIf="name?.errors">
-        Name must be unique
+<div class="category">
+  <h1 class="mat-title">Create new category</h1>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="create-form">
+    <div>
+      <mat-form-field appearance="fill" class="max-width">
+        <mat-label for="title">Title: </mat-label>
+        <input matInput id="title" type="text" formControlName="name" required>
+        <mat-error *ngIf="name?.hasError('notUnique')">
+          Name must be unique
+        </mat-error>
+        <mat-error *ngIf="name?.hasError('required')">
+          This field is required
+        </mat-error>
+        <div *ngIf="!(name?.valid)&&(name?.dirty||name?.touched)">
+
+        </div>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="fill" class="max-width">
+      <mat-label for="description">Description: </mat-label>
+      <textarea matInput id="description" type="text" formControlName="description"></textarea>
+    </mat-form-field>
+    <div>
+      <div>
+        <input class="mat-raised-button mat-primary" type="submit" value="Submit" [disabled]="!categoryForm.valid">
       </div>
     </div>
-  </div>
-  <div>
-    <label for="description">Description: </label>
-    <input id="description" type="text" formControlName="description">
-  </div>
-  <div>
-    <input type="submit" value="Submit" [disabled]="!categoryForm.valid">
-  </div>
-</form>
+  </form>
+</div>

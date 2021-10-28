@@ -8,7 +8,8 @@ import {compareSegments} from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/se
 
 @Component({
   selector:"category-create",
-  templateUrl:"category-create.component.html"
+  templateUrl:"category-create.component.html",
+  styleUrls:['category-create.component.css']
 })
 export class CategoryCreateComponent {
 

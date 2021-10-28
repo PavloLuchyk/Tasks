@@ -1,0 +1,24 @@
+<br/>
+<h1>Authors</h1>
+<br/>
+<ul class="advertisements" fxLayoutGap="1%" fxLayout="column">
+  <li *ngFor="let author of authors" class="item"
+      fxLayoutAlign="space-between" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5%">
+      <a routerLink="/author/{{author.id}}"
+         class="text-black h4"
+         [fxFlex]="'auto'">{{author.firstName + " " + author.lastName}}</a>
+      <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5%">
+        <button mat-raised-button color="warn" (click)="deleteAuthor(author.id, author.email)"
+        >Delete</button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+  </li>
+</ul>
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[15, 30, 45, 60]"
+               (page)="pageEvent = getPages($event)"
+></mat-paginator>
+

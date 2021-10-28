@@ -7,5 +7,5 @@ export interface Advertisement {
   description: string;
   createDate: string;
   author: AuthorView;
-  category: Category;
+  category?: Category;
 }

@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {CategoryService} from "../services/category/category.service";
-import {AdvertisementService} from "../services/advertisement.service";
+import {CategoryService} from "../../services/category/category.service";
+import {AdvertisementService} from "../../services/advertisement.service";
 import {ActivatedRoute, Route} from "@angular/router";
 import {Location} from "@angular/common";
-import {Advertisement} from "../models/advertisement";
-import {Category} from "../models/category";
+import {Advertisement} from "../../models/advertisement";
+import {Category} from "../../models/category";
 
 @Component({
   selector:'advertisement-update',
@@ -24,6 +24,8 @@ export class AdvertisementUpdateComponent implements OnInit{
 
   advertisement?: Advertisement;
 
+  selectedCategory!: Category;
+
   categories: Category[] = [];
 
   constructor(private categoryService: CategoryService,
@@ -34,7 +36,10 @@ export class AdvertisementUpdateComponent implements OnInit{
 
   onSubmit() {
     if(this.advertisement) {
-      console.log(this.advertisement)
+      this.updateForm
+        .patchValue(
+          {category: this.categories.find(x => x.name===this.updateForm.get('category')?.value)}
+        );
       this.advertisementService.updateAdvertisement(this.updateForm.value)
         .subscribe(() => this.goBack());
     }

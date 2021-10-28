@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
 import {LoginService} from "./services/category/login.service";
-import {Role} from "./models/Role";
-import {AuthorizationUtils} from "./security/authorization-utils";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +8,7 @@ import {AuthorizationUtils} from "./security/authorization-utils";
 })
 export class AppComponent {
 
-  constructor(private loginService: LoginService, private authorizationUtils:AuthorizationUtils) {
+  constructor(private loginService: LoginService) {
   }
 
   logout() {
@@ -18,11 +16,20 @@ export class AppComponent {
   }
 
   isLogged() {
-    return this.authorizationUtils.isLogged();
+    return this.loginService.isLogged;
   }
 
   isAdmin() {
-    return this.authorizationUtils.isAdmin();
+    return this.loginService.isAdmin;
+  }
+
+  get id() {
+    const user = this.loginService.userValue;
+    if (user) {
+      return user.id;
+    } else {
+      return -1;
+    }
   }
 
 }

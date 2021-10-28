@@ -30,7 +30,7 @@ public class Advertisement {
     @Column(columnDefinition="TEXT", nullable = false)
     private String description;
 
-    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private Category category;
 
@@ -38,7 +38,7 @@ public class Advertisement {
     @ManyToOne
     private Author author;
 
-    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createDate desc")
     @JsonIgnore
     private List<Comment> comments;

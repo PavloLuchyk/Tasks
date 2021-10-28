@@ -1,5 +1,6 @@
 package org.project.service.impl;
 
+import org.project.enums.PageSize;
 import org.project.model.Advertisement;
 import org.project.repository.AdvertisementRepository;
 import org.project.service.AdvertisementService;
@@ -10,8 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+
 @Service
+@Transactional(readOnly = true)
 public class AdvertisementServiceImpl extends CrudServiceGeneral<Advertisement> implements AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
@@ -34,5 +36,15 @@ public class AdvertisementServiceImpl extends CrudServiceGeneral<Advertisement> 
     @Override
     public List<Advertisement> getAllByParentId(long parentId, String parentName) {
         return advertisementRepository.getAllByParentId(parentId, parentName);
+    }
+
+    @Override
+    public List<Advertisement> getAllByParentIdInPages(long parentId, String parentName, PageSize pageSize, int pageNumber) {
+        return advertisementRepository.getAllByParentIdInPages(parentId, parentName,pageSize,pageNumber);
+    }
+
+    @Override
+    public Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
+        return advertisementRepository.getTotalCountOfPages(parentId,parentName,pageSize);
     }
 }

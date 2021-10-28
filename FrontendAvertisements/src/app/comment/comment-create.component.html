@@ -1,6 +1,9 @@
-<form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="create-form">
   <div>
-    <textarea formControlName="text"></textarea>
+    <mat-form-field appearance="fill" class="max-width">
+      <mat-label>Type your comment: </mat-label>
+      <textarea matInput formControlName="text"></textarea>
+    </mat-form-field>
   </div>
-  <input type="submit" value="Post">
+  <input type="submit" value="Post" class="mat-raised-button mat-primary">
 </form>

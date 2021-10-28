@@ -9,4 +9,6 @@ public interface AuthorService extends CrudService<Author> {
     Author getByEmail(String email);
 
     boolean checkUnique(String email);
+
+    boolean isIdentical(String password, long id);
 }
