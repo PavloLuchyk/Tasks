@@ -2,15 +2,8 @@ package org.project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.project.util.serialization.custom.LocalDateTimeDeserializer;
-import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

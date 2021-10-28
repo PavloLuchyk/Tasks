@@ -1,14 +1,9 @@
 package org.project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.CreationTimestamp;
-import org.project.util.serialization.custom.LocalDateTimeDeserializer;
-import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -44,8 +39,7 @@ public class Advertisement {
     private List<Comment> comments;
 
     @Column(name = "create_date")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @CreationTimestamp
     private LocalDateTime createDate;
 

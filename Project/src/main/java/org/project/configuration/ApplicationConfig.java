@@ -7,7 +7,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -16,11 +15,11 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScans(value = {@ComponentScan("org.project.repository"), @ComponentScan("org.project.service"),
-        @ComponentScan("org.project.configuration")})
+        @ComponentScan("org.project.configuration"),@ComponentScan("org.project.dto")})
 @PropertySource("classpath:hibernate.properties")
 public class ApplicationConfig {
 
-    private Environment environment;
+    private final Environment environment;
 
     @Autowired
     public ApplicationConfig(Environment environment) {

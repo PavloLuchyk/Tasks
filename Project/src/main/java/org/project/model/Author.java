@@ -1,12 +1,9 @@
 package org.project.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.CreationTimestamp;
-import org.project.util.serialization.custom.LocalDateTimeDeserializer;
-import org.project.util.serialization.custom.LocalDateTimeSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -40,9 +37,8 @@ public class Author {
     private String password;
 
     @Column(name = "create_date")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize( using = LocalDateTimeDeserializer.class)
     @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
     @Column(nullable = false)

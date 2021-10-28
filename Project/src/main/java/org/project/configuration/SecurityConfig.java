@@ -1,8 +1,6 @@
 package org.project.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.project.model.Role;
-import org.project.security.JwtUserDetailsService;
 import org.project.security.jwt.JwtConfigurer;
 import org.project.security.jwt.JwtTokenFilter;
 import org.project.security.jwt.JwtTokenProvider;
@@ -12,19 +10,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -40,13 +32,10 @@ import java.util.Map;
         jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private JwtUserDetailsService jwtUserDetailsService;
-
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public SecurityConfig(JwtUserDetailsService jwtUserDetailsService, JwtTokenProvider jwtTokenProvider) {
-        this.jwtUserDetailsService = jwtUserDetailsService;
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
