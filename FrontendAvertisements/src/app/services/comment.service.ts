@@ -26,12 +26,12 @@ export class CommentService {
     return this.http.get<Comment[]>(url);
   }
 
-  getAdvertisement(id: number): Observable<Comment> {
+  getComment(id: number): Observable<Comment> {
     const url = `${this.commentsUrl}/${id}`;
     return this.http.get<Comment>(url);
   }
 
-  updateAComment(comment:Comment): Observable<any> {
+  updateComment(comment:Comment): Observable<any> {
     const url = `${this.commentsUrl}/${comment.id}`;
     return this.http.put(url, comment, this.httpOptions);
   }

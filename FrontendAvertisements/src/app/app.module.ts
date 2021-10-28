@@ -41,6 +41,7 @@ import { AuthorDetailsComponent } from './author/author-details/author-details.c
 import { ProfileComponent } from './author/profile/profile.component';
 import { AuthorUpdateComponent } from './author/author-update/author-update.component';
 import { AdvertisementByAuthorComponent } from './advertisement/advertisement-by-author/advertisement-by-author.component';
+import { CommentUpdateComponent } from './comment/comment-update/comment-update.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AdvertisementByAuthorComponent } from './advertisement/advertisement-by
     AuthorDetailsComponent,
     ProfileComponent,
     AuthorUpdateComponent,
-    AdvertisementByAuthorComponent
+    AdvertisementByAuthorComponent,
+    CommentUpdateComponent
   ],
   imports: [
     BrowserModule,

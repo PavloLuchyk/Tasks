@@ -1,0 +1,9 @@
+<form [formGroup]="updateForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Change your comment: </mat-label>
+    <textarea matInput formControlName="text"></textarea>
+  </mat-form-field>
+  <br/>
+  <input class="mat-raised-button mat-primary" type="submit" value="Update" [mat-dialog-close]="this.updateForm.value">
+  <button mat-raised-button form="none" [mat-dialog-close]="null">Cancel</button>
+</form>

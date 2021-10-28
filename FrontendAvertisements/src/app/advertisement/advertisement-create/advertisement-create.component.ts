@@ -44,7 +44,8 @@ export class AdvertisementCreateComponent implements OnInit{
                                             category: this.category!});
     this.advertisementService.saveAdvertisement(this.advertisementForm.value)
       .subscribe(adv => delay(1000));
-    this.router.navigateByUrl(`/advertisement/category/${this.category?.id}`)
+    const url = this.category ? `/advertisement/category/${this.category?.id}`:'/advertisement';
+    this.router.navigateByUrl(url)
       .then();
   }
 

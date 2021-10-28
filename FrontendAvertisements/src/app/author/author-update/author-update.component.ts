@@ -50,7 +50,7 @@ export class AuthorUpdateComponent implements OnInit {
   onSubmit(): void  {
     this.authorService.updateAuthor(this.authorForm.value)
       .subscribe();
-    this.router.navigate(['/profile'])
+    this.router.navigate([`/author/${this.authorView?.id}`])
       .then();
   }
 

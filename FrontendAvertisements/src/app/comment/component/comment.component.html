@@ -15,7 +15,9 @@
               </a>
               <span>{{comment.createDate}}</span>
               <button mat-raised-button color="warn" (click)="deleteComment(comment.id)"
-                      *ngIf="isOwner(comment.author.id!)||isAdmin()">Delete</button>
+                    *ngIf="isOwner(comment.author.id!)||isAdmin()">Delete</button>
+              <button mat-raised-button color="accent" (click)="updateComment(comment)"
+                    *ngIf="isOwner(comment.author.id!)||isAdmin()">Update</button>
           </div>
           <p class="text-body">{{comment.text}}</p>
           <mat-divider></mat-divider>

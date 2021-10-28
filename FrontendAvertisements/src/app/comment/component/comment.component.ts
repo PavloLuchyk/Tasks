@@ -9,6 +9,7 @@ import {of} from "rxjs";
 import {LoginService} from "../../services/category/login.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../dialog/dialog.component";
+import {CommentUpdateComponent} from "../comment-update/comment-update.component";
 
 @Component({
   selector:'comment-component',
@@ -110,8 +111,20 @@ export class CommentComponent implements OnInit, OnDestroy{
     return false;
   }
 
-  updateComment() {
-
+  updateComment(comment: Comment) {
+    const confirmDialog = this.dialog.open(CommentUpdateComponent, {
+      data: comment
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.commentService.updateComment(result)
+          .subscribe();
+        const url = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([url]);
+        });
+      }
+    })
   }
 
   deleteComment(id: number) {
