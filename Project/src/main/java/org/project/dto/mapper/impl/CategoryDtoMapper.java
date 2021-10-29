@@ -1,12 +1,12 @@
 package org.project.dto.mapper.impl;
 
 import org.project.dto.CategoryDto;
-import org.project.dto.mapper.DtoMapper;
+import org.project.dto.mapper.SimpleDtoEntityMapper;
 import org.project.model.Category;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryDtoMapper implements DtoMapper<Category, CategoryDto> {
+public class CategoryDtoMapper implements SimpleDtoEntityMapper<Category, CategoryDto> {
     @Override
     public CategoryDto mapToDto(Category entity) {
         return new CategoryDto(

@@ -19,7 +19,7 @@
       <mat-form-field appearance="fill">
         <mat-label for="category">Select category</mat-label>
         <mat-select id="category" formControlName="category" [(value)]="selected">
-          <mat-option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</mat-option>
+          <mat-option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

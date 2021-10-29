@@ -25,8 +25,8 @@ export class AdvertisementCreateComponent implements OnInit{
   advertisementForm = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    category: new FormControl('', Validators.required),
-    author: new FormControl('', Validators.required)
+    categoryId: new FormControl('', Validators.required),
+    authorId: new FormControl('', Validators.required)
   })
 
   constructor(private advertisementService: AdvertisementService,
@@ -38,12 +38,12 @@ export class AdvertisementCreateComponent implements OnInit{
 
   onSubmit() {
     if (!this.category) {
-      this.category = this.categories.find(x => x.name === this.advertisementForm.get('category')?.value);
+      this.category = this.categories.find(x => x.id === this.advertisementForm.get('category')?.value);
     }
-    this.advertisementForm.patchValue({author: this.author!,
-                                            category: this.category!});
+    this.advertisementForm.patchValue({authorId: this.author!.id!});
     this.advertisementService.saveAdvertisement(this.advertisementForm.value)
-      .subscribe(adv => delay(1000));
+      .subscribe();
+    console.log(this.advertisementForm.value);
     const url = this.category ? `/advertisement/category/${this.category?.id}`:'/advertisement';
     this.router.navigateByUrl(url)
       .then();

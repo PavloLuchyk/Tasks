@@ -32,6 +32,9 @@ public class AuthorDto {
 
     private Role role;
 
+    public AuthorDto() {
+    }
+
     public AuthorDto(long id, String firstName, String lastName, String email, String password, LocalDateTime createDate, Role role) {
         this.id = id;
         this.firstName = firstName;

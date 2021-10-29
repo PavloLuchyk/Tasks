@@ -1,7 +1,7 @@
 <div class="d-flex flex-column align-items-center">
   <h1 class="h1">{{advertisement?.title}}</h1>
   <p class="text-body">{{advertisement?.description}}</p>
-  <a mat-flat-button color="primary" *ngIf="isOwner(advertisement?.author?.id!)||isAdmin()"
+  <a mat-flat-button color="primary" *ngIf="isOwner(advertisement?.authorId!)||isAdmin()"
      routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
   <comment-create [advertisement]="advertisement" (event)="addComment()"
   *ngIf="isLogged()"></comment-create>

@@ -104,7 +104,7 @@ export class CommentComponent implements OnInit, OnDestroy{
   isOwner(id: number): boolean {
     const user = this.loginService.userValue;
     if (user) {
-      if (user.id===id||user.id===this.advertisement?.author.id) {
+      if (user.id===id||user.id===this.advertisement?.authorId) {
         return true;
       }
     }

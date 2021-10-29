@@ -19,14 +19,22 @@ public class CommentDto {
     @NotNull
     private long authorId;
 
+    @NotNull
+    private String fullName;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
-    public CommentDto(long id, String text, long advertisementId, long authorId, LocalDateTime createDate) {
+    public CommentDto() {
+    }
+
+
+    public CommentDto(long id, String text, long advertisementId, long authorId, String fullName, LocalDateTime createDate) {
         this.id = id;
         this.text = text;
         this.advertisementId = advertisementId;
         this.authorId = authorId;
+        this.fullName = fullName;
         this.createDate = createDate;
     }
 
@@ -68,6 +76,14 @@ public class CommentDto {
 
     public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override

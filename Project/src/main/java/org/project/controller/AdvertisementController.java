@@ -1,34 +1,48 @@
 package org.project.controller;
 
+import org.project.dto.AdvertisementDto;
+import org.project.dto.mapper.impl.AdvertisementDtoMapper;
 import org.project.model.Advertisement;
-import org.project.model.Comment;
 import org.project.service.AdvertisementService;
 import org.project.enums.PageSize;
 import org.project.enums.SortingOrder;
+import org.project.service.AuthorService;
+import org.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins="*")
 @RestController
 public class AdvertisementController {
     
     private final AdvertisementService advertisementService;
+    private final CategoryService categoryService;
+    private final AuthorService authorService;
+    private final AdvertisementDtoMapper advertisementDtoMapper;
 
     @Autowired
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, CategoryService categoryService, AuthorService authorService, AdvertisementDtoMapper advertisementDtoMapper) {
         this.advertisementService = advertisementService;
+        this.categoryService = categoryService;
+        this.authorService = authorService;
+        this.advertisementDtoMapper = advertisementDtoMapper;
     }
 
     @PostMapping("/advertisement/add")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public ResponseEntity<Advertisement> insert(@RequestBody Advertisement advertisement) {
+    public ResponseEntity<AdvertisementDto> insert(@RequestBody AdvertisementDto advertisementDto) {
+        Advertisement advertisement = advertisementDtoMapper.mapToEntity(
+                advertisementDto,
+                categoryService.readById(advertisementDto.getCategoryId()),
+                authorService.readById(advertisementDto.getAuthorId())
+        );
         advertisement = advertisementService.create(advertisement);
-        return ResponseEntity.ok(advertisement);
+        advertisementDto = advertisementDtoMapper.mapToDto(advertisement);
+        return ResponseEntity.ok(advertisementDto);
     }
 
     @GetMapping("/advertisement/{id}")

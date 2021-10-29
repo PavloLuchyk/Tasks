@@ -1,5 +1,7 @@
 package org.project.controller;
 
+import org.project.dto.AuthorDto;
+import org.project.dto.mapper.SimpleDtoEntityMapper;
 import org.project.model.Author;
 import org.project.service.AuthorService;
 import org.project.enums.PageSize;
@@ -12,47 +14,59 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class AuthorController {
 
     private final AuthorService authorService;
+    private final SimpleDtoEntityMapper<Author, AuthorDto> dtoMapper;
 
     @Autowired
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService,
+                            SimpleDtoEntityMapper<Author, AuthorDto> dtoMapper) {
         this.authorService = authorService;
+        this.dtoMapper =dtoMapper;
     }
 
     @PostMapping("/author/add")
-    public ResponseEntity<Author> insert(@RequestBody Author author) {
+    public ResponseEntity<AuthorDto> insert(@RequestBody AuthorDto authorDto) {
+        Author author = dtoMapper.mapToEntity(authorDto);
         author = authorService.create(author);
-        return ResponseEntity.ok(author);
+        authorDto = dtoMapper.mapToDto(author);
+        return ResponseEntity.ok(authorDto);
     }
 
     @GetMapping("/author/{id}")
-    public ResponseEntity<Author> getById(@PathVariable long id) {
+    public ResponseEntity<AuthorDto> getById(@PathVariable long id) {
         Author author = authorService.readById(id);
-        return ResponseEntity.ok().body(author);
+        AuthorDto authorDto = dtoMapper.mapToDto(author);
+        return ResponseEntity.ok(authorDto);
     }
 
     @GetMapping("/author/email/{email}")
-    public ResponseEntity<Author> getById(@PathVariable String email) {
+    public ResponseEntity<AuthorDto> getById(@PathVariable String email) {
         Author author = authorService.getByEmail(email);
-        return ResponseEntity.ok().body(author);
+        AuthorDto authorDto = dtoMapper.mapToDto(author);
+        return ResponseEntity.ok(authorDto);
     }
 
     @GetMapping("/author/sorted/{order}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<Author>> getAllSorted(@PathVariable String order) {
-        List<Author> authors = authorService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()));
+    public ResponseEntity<List<AuthorDto>> getAllSorted(@PathVariable String order) {
+        List<AuthorDto> authors =
+                authorService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()))
+                        .stream().map(dtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(authors);
     }
 
     @GetMapping("/author/pages/{number}/{pageNumber}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<Author>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
-        List<Author> page = authorService.getAllInPages(PageSize.getFromSize(number), pageNumber);
+    public ResponseEntity<List<AuthorDto>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
+        List<AuthorDto> page =
+                authorService.getAllInPages(PageSize.getFromSize(number), pageNumber)
+                        .stream().map(dtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(page);
     }
 
@@ -64,17 +78,20 @@ public class AuthorController {
 
     @GetMapping("/author")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<Author>> getAll(){
-        List<Author> authors = authorService.readAll();
+    public ResponseEntity<List<AuthorDto>> getAll(){
+        List<AuthorDto> authors = authorService.readAll()
+                .stream().map(dtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(authors);
     }
 
     @PutMapping("/author/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or #id == authentication.principal.id")
-    public ResponseEntity<Author> update(@PathVariable("id") long id, @RequestBody Author author) {
-        author.setId(id);
+    public ResponseEntity<AuthorDto> update(@PathVariable("id") long id, @RequestBody AuthorDto authorDto) {
+        authorDto.setId(id);
+        Author author = dtoMapper.mapToEntity(authorDto);
         author = authorService.update(author);
-        return ResponseEntity.ok(author);
+        authorDto = dtoMapper.mapToDto(author);
+        return ResponseEntity.ok(authorDto);
     }
 
     @DeleteMapping("/author/{id}")

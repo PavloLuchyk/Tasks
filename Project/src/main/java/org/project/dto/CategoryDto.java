@@ -22,6 +22,9 @@ public class CategoryDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
+    public CategoryDto() {
+    }
+
     public CategoryDto(long id, String name, String description, LocalDateTime createDate) {
         this.id = id;
         this.name = name;

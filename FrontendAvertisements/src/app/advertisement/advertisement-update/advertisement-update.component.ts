@@ -18,8 +18,8 @@ export class AdvertisementUpdateComponent implements OnInit{
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     createDate: new FormControl('', Validators.required),
-    author: new FormControl('', Validators.required),
-    category: new FormControl('', Validators.required)
+    authorId: new FormControl('', Validators.required),
+    categoryId: new FormControl('', Validators.required)
   });
 
   advertisement?: Advertisement;
@@ -65,8 +65,8 @@ export class AdvertisementUpdateComponent implements OnInit{
           title: advertisement.title,
           description: advertisement.description,
           createDate: advertisement.createDate,
-          author: advertisement.author,
-          category: advertisement.category
+          authorId: advertisement.authorId,
+          categoryId: advertisement.categoryId
         });
       })
   }

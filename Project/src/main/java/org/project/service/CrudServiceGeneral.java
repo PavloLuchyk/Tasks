@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -24,10 +25,12 @@ public abstract class CrudServiceGeneral<T> implements CrudService<T> {
 
     @Override
     public T readById(long id) {
-        if (id <= 0){
-            throw new IllegalArgumentException("Id cannot be lesser or equal zero!");
+        try {
+            return crudRepository.readById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return crudRepository.readById(id);
     }
 
     @Override

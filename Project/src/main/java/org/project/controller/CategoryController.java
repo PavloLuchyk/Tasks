@@ -1,7 +1,7 @@
 package org.project.controller;
 
 import org.project.dto.CategoryDto;
-import org.project.dto.mapper.DtoMapper;
+import org.project.dto.mapper.SimpleDtoEntityMapper;
 import org.project.model.Category;
 import org.project.service.CategoryService;
 import org.project.enums.PageSize;
@@ -11,45 +11,53 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins="*", maxAge=3600)
 @RestController
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final DtoMapper<Category, CategoryDto> dtoMapper;
+    private final SimpleDtoEntityMapper<Category, CategoryDto> dtoMapper;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, DtoMapper<Category, CategoryDto> dtoMapper) {
+    public CategoryController(CategoryService categoryService, SimpleDtoEntityMapper<Category, CategoryDto> dtoMapper) {
         this.categoryService = categoryService;
         this.dtoMapper = dtoMapper;
     }
 
     @PostMapping("/category/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Category> insert(@RequestBody Category category) {
+    public ResponseEntity<CategoryDto> insert(@RequestBody CategoryDto categoryDto) {
+        Category category = dtoMapper.mapToEntity(categoryDto);
         category = categoryService.create(category);
-        return ResponseEntity.ok(category);
+        categoryDto = dtoMapper.mapToDto(category);
+        return ResponseEntity.ok(categoryDto);
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity<Category> getById(@PathVariable long id) {
+    public ResponseEntity<CategoryDto> getById(@PathVariable long id) {
         Category category = categoryService.readById(id);
-        return ResponseEntity.ok().body(category);
+        CategoryDto categoryDto = dtoMapper.mapToDto(category);
+        return ResponseEntity.ok().body(categoryDto);
     }
 
     @GetMapping("/category/sorted/{order}")
-    public ResponseEntity<List<Category>> getAllSorted(@PathVariable String order) {
-        List<Category> category = categoryService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()));
+    public ResponseEntity<List<CategoryDto>> getAllSorted(@PathVariable String order) {
+        List<CategoryDto> category =
+                categoryService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()))
+                .stream().map(dtoMapper::mapToDto)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(category);
     }
 
     @GetMapping("/category/pages/{number}/{pageNumber}")
-    public ResponseEntity<List<Category>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
-        List<Category> pages = categoryService.getAllInPages(PageSize.getFromSize(number),pageNumber);
+    public ResponseEntity<List<CategoryDto>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
+        List<CategoryDto> pages =
+                categoryService.getAllInPages(PageSize.getFromSize(number),pageNumber)
+                .stream().map(dtoMapper::mapToDto)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(pages);
     }
 
@@ -59,17 +67,22 @@ public class CategoryController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<List<Category>> getAll(){
-        List<Category> categories = categoryService.readAll();
+    public ResponseEntity<List<CategoryDto>> getAll(){
+        List<CategoryDto> categories =
+                categoryService.readAll()
+                .stream().map(dtoMapper::mapToDto)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(categories);
     }
 
     @PutMapping("/category/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Category> update(@PathVariable("id") long id, @RequestBody Category category) {
-        category.setId(id);
+    public ResponseEntity<CategoryDto> update(@PathVariable("id") long id, @RequestBody CategoryDto categoryDto) {
+        categoryDto.setId(id);
+        Category category = dtoMapper.mapToEntity(categoryDto);
         category = categoryService.update(category);
-        return ResponseEntity.ok(category);
+        categoryDto = dtoMapper.mapToDto(category);
+        return ResponseEntity.ok(categoryDto);
     }
 
     @DeleteMapping("/category/{id}")
