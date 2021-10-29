@@ -24,7 +24,7 @@ export class AdvertisementUpdateComponent implements OnInit{
 
   advertisement?: Advertisement;
 
-  selectedCategory!: Category;
+  selectedCategory!: string;
 
   categories: Category[] = [];
 
@@ -40,8 +40,15 @@ export class AdvertisementUpdateComponent implements OnInit{
         .patchValue(
           {category: this.categories.find(x => x.name===this.updateForm.get('category')?.value)}
         );
-      this.advertisementService.updateAdvertisement(this.updateForm.value)
-        .subscribe(() => this.goBack());
+      this.updateForm.patchValue({
+        categoryId: Number(this.updateForm.get('categoryId')?.value),
+        authorId: this.advertisement.authorId
+        }
+
+      )
+      console.log(this.updateForm.value);
+     // this.advertisementService.updateAdvertisement(this.updateForm.value)
+        //.subscribe(() => this.goBack());
     }
   }
 
