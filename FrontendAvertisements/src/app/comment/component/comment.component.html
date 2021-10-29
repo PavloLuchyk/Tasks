@@ -1,6 +1,13 @@
 <div class="d-flex flex-column align-items-center">
+  <h1 class="h1">Advertisement: </h1>
   <h1 class="h1">{{advertisement?.title}}</h1>
   <p class="text-body">{{advertisement?.description}}</p>
+  <p class="text-body">Created at: {{advertisement?.createDate}}</p>
+  <p class="text-body">Author:
+    <a routerLink="/author/{{advertisement?.author?.id!}}">
+      {{advertisement?.author?.firstName! + " " + advertisement?.author?.lastName!}}
+    </a>
+  </p>
   <a mat-flat-button color="primary" *ngIf="isOwner(advertisement?.author?.id!)||isAdmin()"
      routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
   <comment-create [advertisement]="advertisement" (event)="addComment()"
@@ -14,12 +21,12 @@
                 {{comment.author.firstName + " " + comment.author.lastName}}
               </a>
               <span>{{comment.createDate}}</span>
+            <button mat-raised-button (click)="updateComment(comment)"
+                    *ngIf="isOwner(comment.author.id!)||isAdmin()">Update</button>
               <button mat-raised-button color="warn" (click)="deleteComment(comment.id)"
                     *ngIf="isOwner(comment.author.id!)||isAdmin()">Delete</button>
-              <button mat-raised-button color="accent" (click)="updateComment(comment)"
-                    *ngIf="isOwner(comment.author.id!)||isAdmin()">Update</button>
           </div>
-          <p class="text-body">{{comment.text}}</p>
+          <p class="text-body h4">{{comment.text}}</p>
           <mat-divider></mat-divider>
       </li>
     </ul>

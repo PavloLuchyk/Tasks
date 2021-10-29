@@ -41,6 +41,10 @@ export class AuthorDetailsComponent implements OnInit {
     return false;
   }
 
+  isAdmin(): boolean {
+    return this.loginService.isAdmin;
+  }
+
   deleteAuthor() {
     const confirmDialog = this.dialog.open(DialogComponent, {
       data: {
