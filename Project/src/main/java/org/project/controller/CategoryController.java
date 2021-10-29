@@ -1,7 +1,5 @@
 package org.project.controller;
 
-import org.project.dto.CategoryDto;
-import org.project.dto.mapper.DtoMapper;
 import org.project.model.Category;
 import org.project.service.CategoryService;
 import org.project.enums.PageSize;
@@ -20,12 +18,10 @@ import java.util.Map;
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final DtoMapper<Category, CategoryDto> dtoMapper;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, DtoMapper<Category, CategoryDto> dtoMapper) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.dtoMapper = dtoMapper;
     }
 
     @PostMapping("/category/add")

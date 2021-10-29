@@ -37,7 +37,8 @@ const routes: Routes = [
   { path: 'author/:id', component: AuthorDetailsComponent},
   { path: 'author/update/:id', component: AuthorUpdateComponent,
     canActivate:[AuthGuard, OwnerGuard], data: {roles:[Role.ADMIN, Role.USER]}},
-  { path: 'advertisement/author/:id', component: AdvertisementByAuthorComponent}
+  { path: 'advertisement/author/:id', component: AdvertisementByAuthorComponent},
+  { path: '**', redirectTo:'categories', pathMatch:"full"},
 ];
 
 @NgModule({

@@ -27,7 +27,7 @@ export class AdvertisementCreateComponent implements OnInit{
     description: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
     author: new FormControl('', Validators.required)
-  })
+  });
 
   constructor(private advertisementService: AdvertisementService,
               private loginService: LoginService,
