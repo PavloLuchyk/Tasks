@@ -15,5 +15,5 @@ public interface CrudService<T> {
     T create(T element);
     T update(T element);
     List<T> getAllInPages(PageSize pageSize, int pageNumber);
-    Long getCountOfAllPages(PageSize pageSize);
+    Number getCountOfAllPages(PageSize pageSize);
 }

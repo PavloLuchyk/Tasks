@@ -24,7 +24,7 @@ export class AdvertisementUpdateComponent implements OnInit{
 
   advertisement?: Advertisement;
 
-  selectedCategory!: string;
+  selectedCategory?: string;
 
   categories: Category[] = [];
 
@@ -44,11 +44,9 @@ export class AdvertisementUpdateComponent implements OnInit{
         categoryId: Number(this.updateForm.get('categoryId')?.value),
         authorId: this.advertisement.authorId
         }
-
       )
-      console.log(this.updateForm.value);
-     // this.advertisementService.updateAdvertisement(this.updateForm.value)
-        //.subscribe(() => this.goBack());
+     this.advertisementService.updateAdvertisement(this.updateForm.value)
+        .subscribe(() => this.goBack());
     }
   }
 
@@ -59,6 +57,7 @@ export class AdvertisementUpdateComponent implements OnInit{
   ngOnInit(): void {
     this.getAdvertisement();
     this.getCategories();
+    this.selectedCategory = this.categories.find(x=>x.id === this.advertisement?.id)?.name;
   }
 
 
@@ -67,6 +66,7 @@ export class AdvertisementUpdateComponent implements OnInit{
     this.advertisementService.getAdvertisement(id)
       .subscribe(advertisement => {
         this.advertisement = advertisement;
+        console.log(advertisement);
         this.updateForm.setValue({
           id:advertisement.id,
           title: advertisement.title,

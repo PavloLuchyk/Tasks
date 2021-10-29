@@ -1,8 +1,6 @@
 <div fxFlex="100%" fxFlexAlign="center center" class="category">
   <div *ngIf="category">
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1%">
-      <button mat-raised-button color="accent" (click)="goBack()" fxFlex="20%" fxFlexAlign="flex-start"
-      >Go back</button>
       <h1 fxFlex="80%">Update category {{category.name | uppercase}}</h1>
     </div>
     <form [formGroup]="updateForm" (ngSubmit)="save()" class="create-form">

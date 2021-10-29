@@ -18,7 +18,7 @@
     <div *ngIf="!category" class="max-width">
       <mat-form-field appearance="fill">
         <mat-label for="category">Select category</mat-label>
-        <mat-select id="category" formControlName="category" [(value)]="selected">
+        <mat-select id="category" formControlName="categoryId" [(value)]="selected">
           <mat-option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</mat-option>
         </mat-select>
       </mat-form-field>

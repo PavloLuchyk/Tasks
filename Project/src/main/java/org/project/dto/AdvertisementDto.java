@@ -23,19 +23,22 @@ public class AdvertisementDto {
     @NotNull
     private long authorId;
 
+    private String fullName;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
     public AdvertisementDto() {
     }
 
-    public AdvertisementDto(long id, String title, String description, Long categoryId, String categoryName, long authorId, LocalDateTime createDate) {
+    public AdvertisementDto(long id, String title, String description, Long categoryId, String categoryName, long authorId, String fullName, LocalDateTime createDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.authorId = authorId;
+        this.fullName = fullName;
         this.createDate = createDate;
     }
 
@@ -97,6 +100,14 @@ public class AdvertisementDto {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override

@@ -72,7 +72,7 @@ public class AuthorController {
 
     @GetMapping("/author/pages/{number}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+    public ResponseEntity<Number> getNumberOfAllPages(@PathVariable int number) {
         return ResponseEntity.ok(authorService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 

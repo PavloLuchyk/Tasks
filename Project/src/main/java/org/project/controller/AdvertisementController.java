@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -46,37 +47,41 @@ public class AdvertisementController {
     }
 
     @GetMapping("/advertisement/{id}")
-    public ResponseEntity<Advertisement> getById(@PathVariable long id) {
-        Advertisement advertisement = advertisementService.readById(id);
-        return ResponseEntity.ok().body(advertisement);
+    public ResponseEntity<AdvertisementDto> getById(@PathVariable long id) {
+        AdvertisementDto advertisement = advertisementDtoMapper.mapToDto(advertisementService.readById(id));
+        return ResponseEntity.ok(advertisement);
     }
 
     @GetMapping("/advertisement/sorted/{order}")
-    public ResponseEntity<List<Advertisement>> getAllSorted(@PathVariable String order) {
-        List<Advertisement> advertisements = advertisementService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()));
+    public ResponseEntity<List<AdvertisementDto>> getAllSorted(@PathVariable String order) {
+        List<AdvertisementDto> advertisements = advertisementService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()))
+                .stream().map(advertisementDtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(advertisements);
     }
 
     @GetMapping("/advertisement/page/{number}/{pageNumber}")
-    public ResponseEntity<List<Advertisement>> getAllInPages(@PathVariable int number,@PathVariable int pageNumber) {
-        List<Advertisement> page = advertisementService.getAllInPages(PageSize.getFromSize(number), pageNumber);
+    public ResponseEntity<List<AdvertisementDto>> getAllInPages(@PathVariable int number,@PathVariable int pageNumber) {
+        List<AdvertisementDto> page = advertisementService.getAllInPages(PageSize.getFromSize(number), pageNumber)
+                .stream().map(advertisementDtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/advertisement/page/{number}")
-    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+    public ResponseEntity<Number> getNumberOfAllPages(@PathVariable int number) {
         return ResponseEntity.ok(advertisementService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
     @GetMapping("/advertisement")
-    public ResponseEntity<List<Advertisement>> getAll(){
-        List<Advertisement> advertisements = advertisementService.readAll();
+    public ResponseEntity<List<AdvertisementDto>> getAll(){
+        List<AdvertisementDto> advertisements = advertisementService.readAll()
+                .stream().map(advertisementDtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(advertisements);
     }
     
     @GetMapping("/advertisement/parent/{parent}/{id}")
-    public ResponseEntity<List<Advertisement>> getAllByParent(@PathVariable String parent, @PathVariable long id) {
-        List<Advertisement> advertisements = advertisementService.getAllByParentId(id, parent);
+    public ResponseEntity<List<AdvertisementDto>> getAllByParent(@PathVariable String parent, @PathVariable long id) {
+        List<AdvertisementDto> advertisements = advertisementService.getAllByParentId(id, parent)
+                .stream().map(advertisementDtoMapper::mapToDto).collect(Collectors.toList());
         return ResponseEntity.ok(advertisements);
     }
 
@@ -94,19 +99,25 @@ public class AdvertisementController {
     }
 
     @GetMapping("/advertisement/parent/{parent}/{id}/{pageSize}")
-    public ResponseEntity<Long> getTotalCountOfPages(@PathVariable String parent,
+    public ResponseEntity<Number> getTotalCountOfPages(@PathVariable String parent,
                                                      @PathVariable long id,
                                                      @PathVariable int pageSize) {
-        Long advertisements = advertisementService.getTotalCountOfPages(id,parent,PageSize.getFromSize(pageSize));
+        Number advertisements = advertisementService.getTotalCountOfPages(id,parent,PageSize.getFromSize(pageSize));
         return ResponseEntity.ok(advertisements);
     }
 
     @PutMapping("/advertisement/{id}")
     @PreAuthorize("hasAuthority('ADMIN') or @advertisementController.isOwner(#id, authentication.principal.id)")
-    public ResponseEntity<Advertisement> update(@PathVariable("id") long id, @RequestBody Advertisement advertisement) {
-        advertisement.setId(id);
+    public ResponseEntity<AdvertisementDto> update(@PathVariable("id") long id, @RequestBody AdvertisementDto advertisementDto) {
+        advertisementDto.setId(id);
+        Advertisement advertisement = advertisementDtoMapper.mapToEntity(
+                advertisementDto,
+                categoryService.readById(advertisementDto.getCategoryId()),
+                authorService.readById(advertisementDto.getAuthorId())
+                );
         advertisement = advertisementService.update(advertisement);
-        return ResponseEntity.ok(advertisement);
+        advertisementDto = advertisementDtoMapper.mapToDto(advertisement);
+        return ResponseEntity.ok(advertisementDto);
     }
 
     @DeleteMapping("/advertisement/{id}")

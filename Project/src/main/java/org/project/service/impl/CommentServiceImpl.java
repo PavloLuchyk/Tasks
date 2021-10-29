@@ -24,15 +24,6 @@ public class CommentServiceImpl extends CrudServiceGeneral<Comment> implements C
     }
 
     @Override
-    @Transactional
-    public Comment create(Comment element) {
-        if (element == null) {
-            throw new IllegalArgumentException("Element cannot be null!");
-        }
-        return element.setId(Long.parseLong(commentRepository.create(element).toString()));
-    }
-
-    @Override
     public List<Comment> getAllByParentId(long parentId, String parentName) {
         return commentRepository.getAllByParentId(parentId, parentName);
     }

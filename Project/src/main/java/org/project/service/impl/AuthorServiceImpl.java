@@ -34,7 +34,8 @@ public class AuthorServiceImpl extends CrudServiceGeneral<Author> implements Aut
         }
         element.setPassword(passwordEncoder.encode(element.getPassword()));
         element.setRole(Role.USER);
-        return element.setId(Long.parseLong(authorRepository.create(element).toString()));
+        authorRepository.create(element);
+        return element;
     }
 
     @Override

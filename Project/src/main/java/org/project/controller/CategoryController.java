@@ -62,7 +62,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/pages/{number}")
-    public ResponseEntity<Long> getNumberOfAllPages(@PathVariable int number) {
+    public ResponseEntity<Number> getNumberOfAllPages(@PathVariable int number) {
         return ResponseEntity.ok(categoryService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 

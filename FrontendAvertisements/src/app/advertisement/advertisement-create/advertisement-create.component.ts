@@ -18,7 +18,7 @@ export class AdvertisementCreateComponent implements OnInit{
 
 
     category?: Category;
-    selected?: Category;
+    selected?: string;
     author?: AuthorView;
     categories: Category[] = [];
 
@@ -37,10 +37,11 @@ export class AdvertisementCreateComponent implements OnInit{
   }
 
   onSubmit() {
-    if (!this.category) {
-      this.category = this.categories.find(x => x.id === this.advertisementForm.get('category')?.value);
-    }
-    this.advertisementForm.patchValue({authorId: this.author!.id!});
+    const categoryId = this.category? this.category?.id : this.advertisementForm.get('categoryId')?.value;
+    this.advertisementForm.patchValue(
+      {authorId: this.author!.id!,
+            categoryId: categoryId
+    });
     this.advertisementService.saveAdvertisement(this.advertisementForm.value)
       .subscribe();
     console.log(this.advertisementForm.value);
@@ -59,6 +60,5 @@ export class AdvertisementCreateComponent implements OnInit{
         this.category=category;
       }
     )
-    console.log(this.category);
   }
 }

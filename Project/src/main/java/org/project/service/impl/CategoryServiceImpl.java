@@ -24,16 +24,6 @@ public class CategoryServiceImpl extends CrudServiceGeneral<Category> implements
         this.advertisementRepository = advertisementRepository;
     }
 
-
-    @Transactional
-    @Override
-    public Category create(Category element) {
-        if (element == null) {
-            throw new IllegalArgumentException("Element cannot be null!");
-        }
-        return element.setId(Long.parseLong(categoryRepository.create(element).toString()));
-    }
-
     @Transactional
     public Category setAllAdvertisementsToNull(Category element) {
         Category category = null;

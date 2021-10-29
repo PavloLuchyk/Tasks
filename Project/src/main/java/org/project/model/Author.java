@@ -38,7 +38,6 @@ public class Author {
 
     @Column(name = "create_date")
     @CreationTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
     @Column(nullable = false)
@@ -46,11 +45,9 @@ public class Author {
     private Role role;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Advertisement> advertisements;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Comment> comments;
 
     public Author() {

@@ -94,7 +94,7 @@ public abstract class CrudRepositoryGeneral<T> implements CrudRepository<T>{
         CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
         CriteriaQuery<Long> pageCriteriaQuery = cb.createQuery(Long.class);
         pageCriteriaQuery.select(cb.count(pageCriteriaQuery.from(clazz)));
-        long totalNumber = sessionFactory.getCurrentSession().createQuery(pageCriteriaQuery).getSingleResult();
+        Long totalNumber = sessionFactory.getCurrentSession().createQuery(pageCriteriaQuery).getSingleResult();
         return totalNumber;
     }
 }

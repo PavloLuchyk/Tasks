@@ -25,15 +25,6 @@ public class AdvertisementServiceImpl extends CrudServiceGeneral<Advertisement> 
     }
 
     @Override
-    @Transactional
-    public Advertisement create(Advertisement element) {
-        if (element == null) {
-            throw new IllegalArgumentException("Element cannot be null!");
-        }
-        return element.setId(Long.parseLong(advertisementRepository.create(element).toString()));
-    }
-
-    @Override
     public List<Advertisement> getAllByParentId(long parentId, String parentName) {
         return advertisementRepository.getAllByParentId(parentId, parentName);
     }

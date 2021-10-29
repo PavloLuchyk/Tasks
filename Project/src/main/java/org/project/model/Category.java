@@ -28,12 +28,10 @@ public class Category {
 
     @Column(name = "create_date")
     @CreationTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
     @OrderBy("createDate desc")
-    @JsonIgnore
     private List<Advertisement> advertisements;
 
     public Category() {

@@ -17,5 +17,5 @@ public interface CrudRepository<T> {
     Serializable create(T element);
     T update(T element);
     List<T> getAllInPages(PageSize pageSize, int pageNumber);
-    Long getCountOfAllPages(PageSize pageSize);
+    Number getCountOfAllPages(PageSize pageSize);
 }

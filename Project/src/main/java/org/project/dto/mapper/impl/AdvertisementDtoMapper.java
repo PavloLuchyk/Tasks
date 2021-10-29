@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdvertisementDtoMapper implements DtoMapper<Advertisement, AdvertisementDto> {
 
-    public Advertisement mapToEntity(AdvertisementDto dto, Category relationEntity1, Author relationEntity2) {
+    public Advertisement mapToEntity(AdvertisementDto dto, Category category, Author author) {
         return new Advertisement()
-                .setAuthor(relationEntity2)
-                .setCategory(relationEntity1)
+                .setAuthor(author)
+                .setCategory(category)
                 .setId(dto.getId())
                 .setTitle(dto.getTitle())
                 .setDescription(dto.getDescription())
@@ -29,6 +29,7 @@ public class AdvertisementDtoMapper implements DtoMapper<Advertisement, Advertis
                 entity.getCategory() == null ? 0: entity.getCategory().getId(),
                 entity.getCategory() == null ? null : entity.getCategory().getName(),
                 entity.getAuthor().getId(),
+                entity.getAuthor().getFirstName() + " " + entity.getAuthor().getLastName(),
                 entity.getCreateDate()
         );
     }

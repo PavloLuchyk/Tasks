@@ -45,6 +45,13 @@ public abstract class CrudServiceGeneral<T> implements CrudService<T> {
 
     @Override
     @Transactional
+    public T create(T element) {
+        crudRepository.create(element);
+        return element;
+    }
+
+    @Override
+    @Transactional
     public void delete(T element) {
         if (element == null) {
             throw new IllegalArgumentException("Element cannot be null!");
@@ -70,7 +77,7 @@ public abstract class CrudServiceGeneral<T> implements CrudService<T> {
     }
 
     @Override
-    public Long getCountOfAllPages(PageSize pageSize) {
+    public Number getCountOfAllPages(PageSize pageSize) {
         if (pageSize == null) {
             throw new IllegalArgumentException("Page size cannot be null or less than 1!");
         }
