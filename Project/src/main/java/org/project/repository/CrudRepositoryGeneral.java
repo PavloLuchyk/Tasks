@@ -90,11 +90,11 @@ public abstract class CrudRepositoryGeneral<T> implements CrudRepository<T>{
     }
 
     @Override
-    public Long getCountOfAllPages(PageSize pageSize) {
+    public Number getCountOfAllPages(PageSize pageSize) {
         CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
-        CriteriaQuery<Long> pageCriteriaQuery = cb.createQuery(Long.class);
+        CriteriaQuery<Number> pageCriteriaQuery = cb.createQuery(Number.class);
         pageCriteriaQuery.select(cb.count(pageCriteriaQuery.from(clazz)));
-        Long totalNumber = sessionFactory.getCurrentSession().createQuery(pageCriteriaQuery).getSingleResult();
+        Number totalNumber = sessionFactory.getCurrentSession().createQuery(pageCriteriaQuery).getSingleResult();
         return totalNumber;
     }
 }

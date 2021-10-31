@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.project.controller.EndPoints.*;
+
 @CrossOrigin(origins="*", maxAge=3600)
+@RequestMapping(CATEGORY)
 @RestController
 public class CategoryController {
 
@@ -27,7 +30,7 @@ public class CategoryController {
         this.dtoMapper = dtoMapper;
     }
 
-    @PostMapping("/category/add")
+    @PostMapping(ADD)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<CategoryDto> insert(@RequestBody CategoryDto categoryDto) {
         Category category = dtoMapper.mapToEntity(categoryDto);
@@ -36,14 +39,14 @@ public class CategoryController {
         return ResponseEntity.ok(categoryDto);
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping(ID)
     public ResponseEntity<CategoryDto> getById(@PathVariable long id) {
         Category category = categoryService.readById(id);
         CategoryDto categoryDto = dtoMapper.mapToDto(category);
         return ResponseEntity.ok().body(categoryDto);
     }
 
-    @GetMapping("/category/sorted/{order}")
+    @GetMapping(SORTED)
     public ResponseEntity<List<CategoryDto>> getAllSorted(@PathVariable String order) {
         List<CategoryDto> category =
                 categoryService.readAllSorted(SortingOrder.valueOf(order.toUpperCase()))
@@ -52,7 +55,7 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping("/category/pages/{number}/{pageNumber}")
+    @GetMapping(PAGES_GET_PAGE)
     public ResponseEntity<List<CategoryDto>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
         List<CategoryDto> pages =
                 categoryService.getAllInPages(PageSize.getFromSize(number),pageNumber)
@@ -61,12 +64,12 @@ public class CategoryController {
         return ResponseEntity.ok(pages);
     }
 
-    @GetMapping("/category/pages/{number}")
+    @GetMapping(PAGES_COUNT)
     public ResponseEntity<Number> getNumberOfAllPages(@PathVariable int number) {
         return ResponseEntity.ok(categoryService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
-    @GetMapping("/category")
+    @GetMapping
     public ResponseEntity<List<CategoryDto>> getAll(){
         List<CategoryDto> categories =
                 categoryService.readAll()
@@ -75,7 +78,7 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping(ID)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<CategoryDto> update(@PathVariable("id") long id, @RequestBody CategoryDto categoryDto) {
         categoryDto.setId(id);
@@ -85,14 +88,14 @@ public class CategoryController {
         return ResponseEntity.ok(categoryDto);
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping(ID)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         categoryService.delete(categoryService.readById(id));
         return ResponseEntity.ok("Category with id " + id + " has been deleted");
     }
 
-    @GetMapping("/category/check")
+    @GetMapping(CHECK)
     public ResponseEntity<?> checkUnique(@RequestParam("name") String name) {
         return ResponseEntity.ok(categoryService.checkUnique(name));
     }

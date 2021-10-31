@@ -19,11 +19,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, length = 30)
     @NotBlank(message = "The 'name' cannot be empty")
     private String name;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", length = 500)
     private String description;
 
     @Column(name = "create_date")
@@ -31,7 +31,6 @@ public class Category {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
-    @OrderBy("createDate desc")
     private List<Advertisement> advertisements;
 
     public Category() {

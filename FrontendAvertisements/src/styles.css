@@ -3,8 +3,35 @@
 @import '~mdb-ui-kit/css/mdb.min.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f0f0f0;
+}
+
+.item {
+  margin: 0.5% 0;
+}
+
 
 .item:hover {
   background-color: lightgray;
 }
+
+.mat-paginator {
+  background-color: #f0f0f0;
+}
+
+.creation-button {
+  font-size: x-large;
+}
+
+.btn-color {
+  background-color: #3f51b5;
+  color: #f2f5ec;
+}
+
+.btn-color:hover {
+  background-color: #3d4eae;
+}
+

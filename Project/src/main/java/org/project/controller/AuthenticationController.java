@@ -21,8 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.project.controller.EndPoints.LOGIN;
+
 @CrossOrigin(origins="*", maxAge=3600)
-@RestController("/auth")
+@RestController
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
 
@@ -38,7 +40,7 @@ public class AuthenticationController {
         this.authorService = authorService;
     }
 
-    @PostMapping("/login")
+    @PostMapping(LOGIN)
     public ResponseEntity<?> login(@RequestBody AuthenticationUserDto requestDto) {
         try {
             String username = requestDto.getUsername();

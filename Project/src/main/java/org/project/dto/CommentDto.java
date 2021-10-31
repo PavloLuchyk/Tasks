@@ -14,10 +14,10 @@ public class CommentDto {
     private String text;
 
     @NotNull
-    private long advertisementId;
+    private Long advertisementId;
 
     @NotNull
-    private long authorId;
+    private Long authorId;
 
     @NotNull
     private String fullName;

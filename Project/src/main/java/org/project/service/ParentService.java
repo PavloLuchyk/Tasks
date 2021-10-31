@@ -8,5 +8,5 @@ public interface ParentService<T> {
 
     List<T> getAllByParentId(long parentId, String parentName);
     List<T> getAllByParentIdInPages(long parentId, String parentName, PageSize pageSize, int pageNumber);
-    Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize);
+    Number getTotalCountOfPages(long parentId, String parentName, PageSize pageSize);
 }

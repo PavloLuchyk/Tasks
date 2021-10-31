@@ -1,3 +1,20 @@
 .item:hover {
   background-color: lightgray;
 }
+
+.item {
+  margin: 0.5% 0;
+}
+
+.creation-button {
+  font-size: x-large;
+}
+
+
+.page-title {
+  font-size: xxx-large;
+  text-align: center;
+  font-weight: bold;
+  color: black;
+}
+

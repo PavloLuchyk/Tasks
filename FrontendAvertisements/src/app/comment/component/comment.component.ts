@@ -52,7 +52,10 @@ export class CommentComponent implements OnInit, OnDestroy{
 
   getAdvertisement() {
     this.advertisementService.getAdvertisement(this.id)
-      .subscribe(advertisement => this.advertisement = advertisement);
+      .subscribe(advertisement => {
+        this.advertisement = advertisement;
+        console.log(advertisement);
+      });
   }
 
   getComments(): void {

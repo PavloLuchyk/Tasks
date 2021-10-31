@@ -5,7 +5,7 @@
       routerLink="/author/update/{{author?.id}}"
   *ngIf="isOwner()">Update</a>
   <button mat-raised-button color="warn"
-          *ngIf="isOwner()" (click)="deleteAuthor()">Delete account</button>
+          *ngIf="isOwner()&&!isAdmin()" (click)="deleteAuthor()">Delete account</button>
   <mat-divider></mat-divider>
   <p>First name: {{author?.firstName}}</p>
   <p>Last name: {{author?.lastName}}</p>

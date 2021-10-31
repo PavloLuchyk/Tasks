@@ -44,12 +44,12 @@ export class CategoryService {
   }
 
   getCategoryInPages(pageSize:number, pageNumber:number): Observable<Category[]> {
-    const url = `${this.categoriesUrl}/pages/${pageSize}/${pageNumber}`;
+    const url = `${this.categoriesUrl}/page/${pageSize}/${pageNumber}`;
     return this.http.get<Category[]>(url);
   }
 
   getTotalAmountOfPages(pageSize:number): Observable<number> {
-    const url = `${this.categoriesUrl}/pages/${pageSize}`;
+    const url = `${this.categoriesUrl}/page/${pageSize}`;
     return this.http.get<number>(url);
   }
 

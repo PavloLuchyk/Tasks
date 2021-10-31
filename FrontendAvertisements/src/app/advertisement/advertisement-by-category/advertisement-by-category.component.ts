@@ -9,6 +9,7 @@ import {BehaviorSubject, Observable, of} from "rxjs";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {LoginService} from "../../services/login.service";
+import {StringCutter} from "../../Util/string-cutter";
 
 @Component({
   selector:'advertisement-by-component',
@@ -96,5 +97,9 @@ export class AdvertisementByCategoryComponent implements OnInit{
 
   isLogged(): boolean {
     return this.loginService.isLogged;
+  }
+
+  descriptionCutter(description: string): string {
+    return StringCutter.descriptionCutter(description);
   }
 }

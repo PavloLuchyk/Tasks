@@ -1,31 +1,43 @@
-<div class="category d-flex flex-column align-items-center" >
+<div>
   <br/>
-  <div class="info flex-row justify-content-center align-items-center">
-    <h1>{{category?.name}}</h1>
-    <a mat-raised-button color="primary" routerLink="/advertisement/create"
-      *ngIf="isLogged()" >Create advertisement</a>
+  <h1 class="page-title h1">{{category?.name}}</h1>
+  <div class="offset-sm-1 col-sm-10">
+    <p class="h4 text-dark font-weight-normal text-center">{{category?.description}}</p>
+    <br />
   </div>
-  <h3>Description: </h3>
+  <div class="d-flex flex-row justify-content-center">
+    <a class="btn btn-color creation-button" routerLink="/advertisement/create"
+       *ngIf="isLogged()">Create advertisement</a>
+  </div>
   <br/>
-  <p>{{category?.description}}</p>
-  <mat-divider></mat-divider>
-  <ul class="advertisements">
-    <li *ngFor="let advertisement of advertisements" class="item d-flex justify-content-between">
-      <a routerLink="/advertisement/{{advertisement.id}}"
-         class="text-black h4"
-         >{{advertisement.title}}</a>
-      <div class="d-flex flex-row justify-content-between" *ngIf="isAdmin()">
-        <a mat-stroked-button routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
-        <button mat-raised-button color="warn" (click)="deleteAdvertisement(advertisement.id, advertisement.title)"
-        >Delete</button>
+  <div class="d-flex flex-row flex-wrap justify-content-around card-deck">
+    <div *ngFor="let advertisement of advertisements" class="item col-sm-5 card">
+      <div class="card-body">
+        <h1 class="card-title">
+          <a routerLink="/advertisement/{{advertisement.id}}"
+             class="text-dark h1">{{advertisement.title}}</a>
+        </h1>
+        <h4>
+          <a routerLink="/author/{{advertisement.authorId}}">
+            {{advertisement.fullName}}
+          </a>,
+          {{advertisement.createDate}}
+        </h4>
+        <p class="card-text h5">
+          {{descriptionCutter(advertisement.description)}}
+        </p>
+        <div *ngIf="isAdmin()">
+          <a mat-flat-button routerLink="/advertisement/update/{{advertisement.id}}" class="btn-outline-dark">Update</a>
+          <button mat-raised-button color="warn" (click)="deleteAdvertisement(advertisement.id, advertisement.title)"
+          >Delete</button>
+        </div>
       </div>
-      <mat-divider></mat-divider>
-    </li>
+    </div>
+  </div>
     <mat-paginator [length]="length"
                    [pageSize]="pageSize"
                    [pageSizeOptions]="[15, 30, 45, 60]"
                    (page)="pageEvent = getPages($event)"
     ></mat-paginator>
-  </ul>
 </div>
 

@@ -10,6 +10,7 @@ import {DialogComponent} from "../../dialog/dialog.component";
 import {AuthorView} from "../../models/author-view";
 import {AuthorService} from "../../services/author.service";
 import {LoginService} from "../../services/login.service";
+import {StringCutter} from "../../Util/string-cutter";
 
 @Component({
   selector: 'app-advertisement-by-author',
@@ -105,4 +106,9 @@ export class AdvertisementByAuthorComponent implements OnInit {
       }
     })
   }
+
+  descriptionCutter(description: string): string {
+    return StringCutter.descriptionCutter(description);
+  }
+
 }

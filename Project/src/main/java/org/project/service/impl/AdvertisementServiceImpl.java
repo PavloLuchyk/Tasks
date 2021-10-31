@@ -35,7 +35,7 @@ public class AdvertisementServiceImpl extends CrudServiceGeneral<Advertisement> 
     }
 
     @Override
-    public Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
+    public Number getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
         return advertisementRepository.getTotalCountOfPages(parentId,parentName,pageSize);
     }
 }

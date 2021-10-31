@@ -1,8 +1,8 @@
 <div class="d-flex flex-column align-items-center">
-  <h1 class="h1">{{advertisement?.title}}</h1>
+  <h1 class="h1 page-title">{{advertisement?.title}}</h1>
   <p class="text-body">{{advertisement?.description}}</p>
   <a mat-flat-button color="primary" *ngIf="isOwner(advertisement?.authorId!)||isAdmin()"
-     routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
+     routerLink="/advertisement/update/{{advertisement?.id}}">Update</a>
   <comment-create [advertisement]="advertisement" (event)="addComment()"
   *ngIf="isLogged()"></comment-create>
   <div >
@@ -10,14 +10,14 @@
       <li *ngFor="let comment of comments" class="item-container">
           <mat-divider></mat-divider>
           <div>
-              <a class="text-black" routerLink="/author/{{comment.author.id}}">
-                {{comment.author.firstName + " " + comment.author.lastName}}
+              <a class="text-black" routerLink="/author/{{comment.authorId}}">
+                {{comment.fullName}}
               </a>
               <span>{{comment.createDate}}</span>
               <button mat-raised-button color="warn" (click)="deleteComment(comment.id)"
-                    *ngIf="isOwner(comment.author.id!)||isAdmin()">Delete</button>
+                    *ngIf="isOwner(comment.authorId!)||isAdmin()">Delete</button>
               <button mat-raised-button color="accent" (click)="updateComment(comment)"
-                    *ngIf="isOwner(comment.author.id!)||isAdmin()">Update</button>
+                    *ngIf="isOwner(comment.authorId!)||isAdmin()">Update</button>
           </div>
           <p class="text-body">{{comment.text}}</p>
           <mat-divider></mat-divider>

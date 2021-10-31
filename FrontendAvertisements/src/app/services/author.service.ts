@@ -50,12 +50,12 @@ export class AuthorService {
   }
 
   getAuthorsInPages(pageSize: number, pageNumber:number): Observable<AuthorView[]> {
-    const url = `${this.authorUrl}/pages/${pageSize}/${pageNumber}`;
+    const url = `${this.authorUrl}/page/${pageSize}/${pageNumber}`;
     return this.http.get<AuthorView[]>(url);
   }
 
   getTotalNumberOfPages(pageSize: number): Observable<number> {
-    const url = `${this.authorUrl}/pages/${pageSize}`;
+    const url = `${this.authorUrl}/page/${pageSize}`;
     return this.http.get<number>(url);
   }
 

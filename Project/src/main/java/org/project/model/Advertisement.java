@@ -18,18 +18,18 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(length = 50)
     @NotBlank(message = "The 'title' cannot be empty")
     private String title;
 
-    @Column(columnDefinition="TEXT", nullable = false)
+    @Column(columnDefinition="TEXT")
     private String description;
 
-    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
     private Category category;
 
-    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     @ManyToOne
     private Author author;
 

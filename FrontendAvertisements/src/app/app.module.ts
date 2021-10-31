@@ -38,6 +38,7 @@ import { AuthorDetailsComponent } from './author/author-details/author-details.c
 import { AuthorUpdateComponent } from './author/author-update/author-update.component';
 import { AdvertisementByAuthorComponent } from './advertisement/advertisement-by-author/advertisement-by-author.component';
 import { CommentUpdateComponent } from './comment/comment-update/comment-update.component';
+import {OverlayModule} from "@angular/cdk/overlay";
 
 @NgModule({
   declarations: [
@@ -60,29 +61,30 @@ import { CommentUpdateComponent } from './comment/comment-update/comment-update.
     AdvertisementByAuthorComponent,
     CommentUpdateComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatInputModule,
-    FlexModule,
-    FlexLayoutModule,
-    MatSelectModule,
-    MatDialogModule,
-    MDBBootstrapModule.forRoot()
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatMenuModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatInputModule,
+        FlexModule,
+        FlexLayoutModule,
+        MatSelectModule,
+        MatDialogModule,
+        MDBBootstrapModule.forRoot(),
+        OverlayModule
+    ],
   exports: [
     BrowserAnimationsModule,
     LayoutModule,

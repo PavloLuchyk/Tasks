@@ -1,34 +1,37 @@
 <div fxLayout="column">
   <br/>
-  <div fxLayout="row" fxLayoutGap="16px">
-    <h1 class="h1">Advertisements</h1>
-    <a mat-raised-button color="primary" routerLink="/advertisement/create"
-       fxFlexAlign="start" fxLayoutAlign="end" dir="rtl" *ngIf="isLogged()">Create advertisement</a>
+  <h1 class="display-1 page-title">Advertisements</h1>
+  <div class="d-flex justify-content-center">
+    <a routerLink="/advertisement/create"
+       *ngIf="isLogged()" class="creation-button col-sm-6 btn btn-color btn-primary">Create new advertisement</a>
   </div>
   <br/>
-    <div *ngFor="let advertisement of advertisements" class="item"
-        >
-      <div>
-        <h1>
-          <a routerLink="/advertisement/{{advertisement.id}}"
-             class="text-black h1">{{advertisement.title}}</a>
-        </h1>
-        <h4>
-          <a routerLink="/author/{{advertisement.authorId}}">
-            {{advertisement.fullName}}
-          </a>,
-          {{advertisement.createDate}}
-        </h4>
-        <h5>Category:<a
-          routerLink="{{advertisement.categoryId ? '/advertisement/category/' + advertisement.categoryId : ''}}"
-        > {{advertisement.categoryId ? advertisement.categoryName : 'none'}}</a></h5>
-        <div *ngIf="isAdmin()">
-          <a mat-flat-button routerLink="/advertisement/update/{{advertisement.id}}">Update</a>
-          <button mat-raised-button color="warn" (click)="deleteAdvertisement(advertisement.id, advertisement.title)"
-          >Delete</button>
+    <div class="d-flex flex-row flex-wrap justify-content-around card-deck">
+      <div *ngFor="let advertisement of advertisements" class="item col-sm-5 card">
+        <div class="card-body">
+          <h1 class="card-title">
+            <a routerLink="/advertisement/{{advertisement.id}}"
+               class="text-dark h1">{{advertisement.title}}</a>
+          </h1>
+          <h4>
+            <a routerLink="/author/{{advertisement.authorId}}">
+              {{advertisement.fullName}}
+            </a>,
+            {{advertisement.createDate}}
+          </h4>
+          <h4 class="h4">Category:<a
+            routerLink="{{advertisement.categoryId ? '/advertisement/category/' + advertisement.categoryId : ''}}"
+          > {{advertisement.categoryId ? advertisement.categoryName : 'none'}}</a></h4>
+          <p class="card-text h5">
+            {{descriptionCutter(advertisement.description)}}
+          </p>
+          <div *ngIf="isAdmin()">
+            <a mat-flat-button routerLink="/advertisement/update/{{advertisement.id}}" class="btn-outline-dark">Update</a>
+            <button mat-raised-button color="warn" (click)="deleteAdvertisement(advertisement.id, advertisement.title)"
+            >Delete</button>
+          </div>
         </div>
       </div>
-
     </div>
   <mat-paginator [length]="length"
                  [pageSize]="pageSize"

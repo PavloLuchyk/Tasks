@@ -34,7 +34,7 @@ public class CommentServiceImpl extends CrudServiceGeneral<Comment> implements C
     }
 
     @Override
-    public Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
+    public Number getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
         return commentRepository.getTotalCountOfPages(parentId,parentName,pageSize);
     }
 }

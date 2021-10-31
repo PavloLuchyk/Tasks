@@ -37,13 +37,13 @@ public class AdvertisementRepositoryImpl extends CrudRepositoryGeneral<Advertise
     }
 
     @Override
-    public Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
-        TypedQuery<Long> query = sessionFactory.getCurrentSession()
+    public Number getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
+        TypedQuery<Number> query = sessionFactory.getCurrentSession()
                 .createQuery("SELECT count(a) from Advertisement a where " +
                         "a."+parentName+".id"
-                        +" = :parentId")
+                        +" = :parentId", Number.class)
                 .setParameter("parentId", parentId);
-        return  query.getSingleResult();
+        return query.getSingleResult();
     }
 
     private CriteriaQuery<Advertisement> getParentQuery(long parentId, String parentName) {

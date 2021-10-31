@@ -41,11 +41,11 @@ public class CommentRepositoryImpl extends CrudRepositoryGeneral<Comment> implem
     }
 
     @Override
-    public Long getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
-        TypedQuery<Long> query = sessionFactory.getCurrentSession()
+    public Number getTotalCountOfPages(long parentId, String parentName, PageSize pageSize) {
+        TypedQuery<Number> query = sessionFactory.getCurrentSession()
                 .createQuery("SELECT count(a) from Comment a where " +
                         "a."+parentName+".id"
-                        +" = :parentId")
+                        +" = :parentId", Number.class)
                 .setParameter("parentId", parentId);
         return  query.getSingleResult();
     }

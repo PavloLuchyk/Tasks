@@ -47,12 +47,12 @@ export class CommentService {
   }
 
   getCommentsInPages(id: number, parent: string, pageSize:number, pageNumber:number): Observable<Comment[]> {
-    const url = `${this.commentsUrl}/${parent}/${id}/${pageSize}/${pageNumber}`;
+    const url = `${this.commentsUrl}/parent/${parent}/${id}/${pageSize}/${pageNumber}`;
     return this.http.get<Comment[]>(url);
   }
 
   getTotalAmountOfPages(id: number, parent: string, pageSize:number): Observable<number> {
-    const url = `${this.commentsUrl}/${parent}/${id}/${pageSize}`;
+    const url = `${this.commentsUrl}/parent/${parent}/${id}/${pageSize}`;
     return this.http.get<number>(url);
   }
 

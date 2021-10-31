@@ -16,7 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.project.controller.EndPoints.*;
+
 @CrossOrigin(origins="*", maxAge=3600)
+@RequestMapping(AUTHOR)
 @RestController
 public class AuthorController {
 
@@ -30,7 +33,7 @@ public class AuthorController {
         this.dtoMapper =dtoMapper;
     }
 
-    @PostMapping("/author/add")
+    @PostMapping(ADD)
     public ResponseEntity<AuthorDto> insert(@RequestBody AuthorDto authorDto) {
         Author author = dtoMapper.mapToEntity(authorDto);
         author = authorService.create(author);
@@ -38,21 +41,21 @@ public class AuthorController {
         return ResponseEntity.ok(authorDto);
     }
 
-    @GetMapping("/author/{id}")
+    @GetMapping(ID)
     public ResponseEntity<AuthorDto> getById(@PathVariable long id) {
         Author author = authorService.readById(id);
         AuthorDto authorDto = dtoMapper.mapToDto(author);
         return ResponseEntity.ok(authorDto);
     }
 
-    @GetMapping("/author/email/{email}")
+    @GetMapping(AUTHOR_GET_BY_EMAIL)
     public ResponseEntity<AuthorDto> getById(@PathVariable String email) {
         Author author = authorService.getByEmail(email);
         AuthorDto authorDto = dtoMapper.mapToDto(author);
         return ResponseEntity.ok(authorDto);
     }
 
-    @GetMapping("/author/sorted/{order}")
+    @GetMapping(SORTED)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<AuthorDto>> getAllSorted(@PathVariable String order) {
         List<AuthorDto> authors =
@@ -61,7 +64,7 @@ public class AuthorController {
         return ResponseEntity.ok(authors);
     }
 
-    @GetMapping("/author/pages/{number}/{pageNumber}")
+    @GetMapping(PAGES_GET_PAGE)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<AuthorDto>> getAllInPages(@PathVariable int number, @PathVariable int pageNumber) {
         List<AuthorDto> page =
@@ -70,13 +73,13 @@ public class AuthorController {
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/author/pages/{number}")
+    @GetMapping(PAGES_COUNT)
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Number> getNumberOfAllPages(@PathVariable int number) {
         return ResponseEntity.ok(authorService.getCountOfAllPages(PageSize.getFromSize(number)));
     }
 
-    @GetMapping("/author")
+    @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<AuthorDto>> getAll(){
         List<AuthorDto> authors = authorService.readAll()
@@ -84,7 +87,7 @@ public class AuthorController {
         return ResponseEntity.ok(authors);
     }
 
-    @PutMapping("/author/{id}")
+    @PutMapping(ID)
     @PreAuthorize("hasAuthority('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<AuthorDto> update(@PathVariable("id") long id, @RequestBody AuthorDto authorDto) {
         authorDto.setId(id);
@@ -94,21 +97,21 @@ public class AuthorController {
         return ResponseEntity.ok(authorDto);
     }
 
-    @DeleteMapping("/author/{id}")
+    @DeleteMapping(ID)
     @PreAuthorize("hasAuthority('ADMIN') or #id == authentication.principal.id")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         authorService.delete(authorService.readById(id));
         return ResponseEntity.ok("Author with id " + id + " has been deleted");
     }
 
-    @GetMapping("/author/check")
+    @GetMapping(CHECK)
     public ResponseEntity<?> checkUnique(@RequestParam("email") String name) {
         Map<String, Boolean> response = new HashMap<>();
         response.put("unique", authorService.checkUnique(name));
         return ResponseEntity.ok(authorService.checkUnique(name));
     }
 
-    @PostMapping("/author/check/password")
+    @PostMapping(CHECK)
     public ResponseEntity<Boolean> isIdentical(@RequestBody Author author) {
         return ResponseEntity.ok(authorService.isIdentical(author.getPassword(),author.getId()));
     }

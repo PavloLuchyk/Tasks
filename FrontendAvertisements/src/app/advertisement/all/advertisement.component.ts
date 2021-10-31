@@ -5,6 +5,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {LoginService} from "../../services/login.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector:'advertisements',
@@ -18,9 +19,12 @@ export class AdvertisementComponent implements OnInit{
   pageIndex = 0;
   pageEvent?: PageEvent;
   advertisements: Advertisement[] = [];
+  title?: string;
 
   constructor(private advertisementService: AdvertisementService,
               private loginService: LoginService,
+              private route: ActivatedRoute,
+              private router: Router,
               private dialog: MatDialog) {
   }
 
@@ -42,7 +46,7 @@ export class AdvertisementComponent implements OnInit{
   }
 
   getPages(event?:PageEvent) {
-    this.advertisementService.getNumberOfAllAdvertisements( event!.pageSize)
+    this.advertisementService.getNumberOfAllAdvertisements(event!.pageSize)
       .subscribe(
         length => this.length = length
       );
@@ -55,6 +59,14 @@ export class AdvertisementComponent implements OnInit{
         }
       );
     return event;
+  }
+
+  descriptionCutter(description: string): string {
+    if (description.length > 57) {
+      return description.substring(0, 57) + "...";
+    } else {
+      return description
+    }
   }
 
   deleteAdvertisement(id:number, title:string): void {
@@ -72,6 +84,8 @@ export class AdvertisementComponent implements OnInit{
       }
     })
   }
+
+
 
   isLogged() {
     return this.loginService.isLogged;
