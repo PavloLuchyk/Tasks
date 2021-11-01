@@ -21,7 +21,7 @@ public class AdvertisementDto {
     private String categoryName;
 
     @NotNull
-    private long authorId;
+    private Long authorId;
 
     private String fullName;
 

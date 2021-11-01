@@ -1,28 +1,30 @@
-<div class="category d-flex flex-column align-items-center" >
-  <div class="info flex-row justify-content-between" >
-    <h1>Categories</h1>
-    <a routerLink="/categories/create" mat-raised-button color="primary"
-    *ngIf="isAdmin()">Create category</a>
+<div>
+  <h1 class="page-title">Categories</h1>
+  <div class="d-flex flex-row justify-content-center">
+    <a routerLink="/categories/create" class="creation-button btn btn-color"
+       *ngIf="isAdmin()">Create category</a>
   </div>
   <mat-divider class="mat-divider"></mat-divider>
-  <ul>
-    <li *ngFor="let category of categories" class="item" >
-        <div class="d-flex justify-content-between">
-          <a class="h4 text-black align-self-end" routerLink="/advertisement/category/{{category.id}}">{{category.name}}</a>
-          <div class="d-flex justify-content-between" *ngIf="isAdmin()">
-            <a mat-stroked-button routerLink="/category/{{category.id}}"
-               >Update</a>
-            <button mat-raised-button color="warn" (click)="deleteCategory(category.id, category.name)">Delete</button>
+  <div class="d-flex flex-row flex-wrap justify-content-around card-deck">
+    <div *ngFor="let category of categories" class="item col-sm-5 card" >
+          <div class="margin-1">
+            <a class="h4 text-black" routerLink="/advertisement/category/{{category.id}}">{{category.name}}</a>
+            <p class="card-text h5">
+              {{descriptionCutter(category.description)}}
+            </p>
+            <div *ngIf="isAdmin()">
+              <a mat-stroked-button routerLink="/category/{{category.id}}"
+              >Update</a>
+              <button mat-raised-button color="warn" (click)="deleteCategory(category.id, category.name)">Delete</button>
+            </div>
           </div>
-        </div>
-      <mat-divider></mat-divider>
-    </li>
+    </div>
     <mat-paginator [length]="length"
                    [pageSize]="pageSize"
                    [pageSizeOptions]="[15, 30, 45, 60]"
                    (page)="pageEvent = getPages($event)"
     ></mat-paginator>
-  </ul>
+  </div>
 
 </div>
 

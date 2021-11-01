@@ -54,7 +54,6 @@ export class CommentComponent implements OnInit, OnDestroy{
     this.advertisementService.getAdvertisement(this.id)
       .subscribe(advertisement => {
         this.advertisement = advertisement;
-        console.log(advertisement);
       });
   }
 

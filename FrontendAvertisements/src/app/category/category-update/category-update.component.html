@@ -13,8 +13,9 @@
       <div>
         <mat-form-field class="max-width" appearance="fill">
           <mat-label for="description">Description: </mat-label>
-          <textarea matInput type="text" id="description" formControlName="description">
+          <textarea matInput type="text" id="description" formControlName="description" [maxLength]="maxLength">
         </textarea>
+          <mat-hint>Characters remaining: {{description?.value?.length}}/{{maxLength}}</mat-hint>
         </mat-form-field>
       </div>
       <p class="mat-body">Created at: {{category.createDate}}</p>

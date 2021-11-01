@@ -9,11 +9,10 @@
   border-top-style: solid;
 }
 
-.item {
-  min-width: 150px;
-  max-width: 500px;
-}
-
-.item:hover {
-  background-color: lightgray;
+.page-title {
+  font-size: xxx-large;
+  text-align: center;
+  font-weight: bold;
+  color: black;
+  margin: 1%;
 }

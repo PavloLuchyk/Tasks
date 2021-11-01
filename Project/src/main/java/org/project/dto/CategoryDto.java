@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class CategoryDto {
 
-    private long id;
+    private Long id;
 
     @NotNull
     @NotBlank(message = "Name cannot be empty!")

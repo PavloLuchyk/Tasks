@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class AuthorDto {
-    private long id;
+    private Long id;
 
     @Pattern(regexp = "^[A-Z][a-z]{1,20}([-][A-Z][a-z]{1,20})?",
             message = "Must start with a capital letter followed by one or more lowercase letters")

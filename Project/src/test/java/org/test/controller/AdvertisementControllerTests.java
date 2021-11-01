@@ -122,11 +122,11 @@ public class AdvertisementControllerTests {
 
     @Test
     public void getAllInPagesTest() throws Exception {
-        Mockito.when(service.getAllInPages(PageSize.SIZE15)).thenReturn(new TreeMap<>());
+        Mockito.when(service.getAllInPages(PageSize.SIZE15, 0)).thenReturn(new ArrayList<>());
         mockMvc.perform(MockMvcRequestBuilders.get("/advertisement/pages/15"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(service, Mockito.times(1)).getAllInPages(PageSize.SIZE15);
+        Mockito.verify(service, Mockito.times(1)).getAllInPages(PageSize.SIZE15, 0);
     }
     
     @Test

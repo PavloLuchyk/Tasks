@@ -5,10 +5,14 @@ p {
 
 .page-title {
   font-size: xxx-large;
-  text-align: center;
   font-weight: bold;
   color: black;
   margin: 1%;
+}
+
+.item-container {
+  background-color: whitesmoke;
+  margin: 0.5% 0%;
 }
 
 

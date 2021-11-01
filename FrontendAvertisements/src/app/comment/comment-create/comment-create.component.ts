@@ -20,10 +20,12 @@ export class CommentCreateComponent implements OnInit{
 
   @Output() event: EventEmitter<Comment> = new EventEmitter<Comment>();
 
+  maxLength = 300;
+
   commentForm = new FormGroup({
     text: new FormControl('', Validators.required),
-    author: new FormControl(''),
-    advertisement: new FormControl('')
+    authorId: new FormControl(''),
+    advertisementId: new FormControl('')
   })
 
   constructor(private commentService: CommentService,
@@ -33,8 +35,8 @@ export class CommentCreateComponent implements OnInit{
 
   onSubmit(): void {
     this.commentForm.patchValue({
-      advertisement: this.advertisement,
-      author: this.author
+      advertisementId: this.advertisement?.id,
+      authorId: this.author.id
     });
     this.addComment(this.commentForm.value);
     this.commentService.saveComment(this.commentForm.value).subscribe();
@@ -53,4 +55,7 @@ export class CommentCreateComponent implements OnInit{
       .subscribe(author => this.author = author);
   }
 
+  get text() {
+    return this.commentForm.get("text");
+  }
 }

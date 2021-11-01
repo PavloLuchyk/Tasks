@@ -16,6 +16,8 @@ export class CategoryUpdateComponent implements OnInit{
 
    updateForm: FormGroup;
 
+   maxLength = 255;
+
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,
@@ -58,5 +60,9 @@ export class CategoryUpdateComponent implements OnInit{
           .subscribe(() => this.goBack());
       }
 
+    }
+
+    get description() {
+      return this.updateForm.get("description");
     }
 }

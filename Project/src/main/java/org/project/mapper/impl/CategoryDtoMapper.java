@@ -1,7 +1,7 @@
-package org.project.dto.mapper.impl;
+package org.project.mapper.impl;
 
 import org.project.dto.CategoryDto;
-import org.project.dto.mapper.SimpleDtoEntityMapper;
+import org.project.mapper.SimpleDtoEntityMapper;
 import org.project.model.Category;
 import org.springframework.stereotype.Component;
 

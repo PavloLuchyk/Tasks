@@ -1,7 +1,7 @@
-package org.project.dto.mapper.impl;
+package org.project.mapper.impl;
 
 import org.project.dto.CommentDto;
-import org.project.dto.mapper.DtoMapper;
+import org.project.mapper.DtoMapper;
 import org.project.model.Advertisement;
 import org.project.model.Author;
 import org.project.model.Comment;

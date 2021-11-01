@@ -1,7 +1,7 @@
 package org.project.controller;
 
 import org.project.dto.AdvertisementDto;
-import org.project.dto.mapper.impl.AdvertisementDtoMapper;
+import org.project.mapper.impl.AdvertisementDtoMapper;
 import org.project.model.Advertisement;
 import org.project.service.AdvertisementService;
 import org.project.enums.PageSize;

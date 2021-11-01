@@ -15,6 +15,8 @@ export class CategoryCreateComponent {
 
   private category?: Category;
 
+  maxLength = 255;
+
   categoryForm = new FormGroup({
       name: new FormControl('',
         {
@@ -33,6 +35,10 @@ export class CategoryCreateComponent {
 
   get name() {
     return this.categoryForm.get("name");
+  }
+
+  get description() {
+    return this.categoryForm.get("description");
   }
 
   constructor(private categoryService: CategoryService, private router: Router){

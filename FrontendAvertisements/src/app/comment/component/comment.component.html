@@ -1,26 +1,28 @@
-<div class="d-flex flex-column align-items-center">
+<div class="offset-sm-1 col-sm-10">
   <h1 class="h1 page-title">{{advertisement?.title}}</h1>
-  <p class="text-body">{{advertisement?.description}}</p>
-  <a mat-flat-button color="primary" *ngIf="isOwner(advertisement?.authorId!)||isAdmin()"
+  <p class="text-body h4 text-dark">{{advertisement?.description}}</p>
+  <a class="creation-button btn btn-color" *ngIf="isOwner(advertisement?.authorId!)||isAdmin()"
      routerLink="/advertisement/update/{{advertisement?.id}}">Update</a>
+  <div>
   <comment-create [advertisement]="advertisement" (event)="addComment()"
   *ngIf="isLogged()"></comment-create>
-  <div >
-    <ul class="comments">
-      <li *ngFor="let comment of comments" class="item-container">
-          <mat-divider></mat-divider>
-          <div>
-              <a class="text-black" routerLink="/author/{{comment.authorId}}">
+    <ul class="comments card-deck">
+      <li *ngFor="let comment of comments" class="item-container col-sm-8 card">
+          <div class="margin-1">
+            <div class="d-flex flex-row justify-content-between">
+              <a class="text-black font-weight-bold h5" routerLink="/author/{{comment.authorId}}">
                 {{comment.fullName}}
               </a>
-              <span>{{comment.createDate}}</span>
+              <span class="text-black-50 text-end h5">{{comment.createDate}}</span>
+            </div>
+            <p class="text-body  text-dark h5">{{comment.text}}</p>
+            <div class="d-flex flex-row">
+              <button mat-raised-button (click)="updateComment(comment)"
+                      *ngIf="isOwner(comment.authorId!)||isAdmin()">Change</button>
               <button mat-raised-button color="warn" (click)="deleteComment(comment.id)"
-                    *ngIf="isOwner(comment.authorId!)||isAdmin()">Delete</button>
-              <button mat-raised-button color="accent" (click)="updateComment(comment)"
-                    *ngIf="isOwner(comment.authorId!)||isAdmin()">Update</button>
+                      *ngIf="isOwner(comment.authorId!)||isAdmin()">Delete</button>
+            </div>
           </div>
-          <p class="text-body">{{comment.text}}</p>
-          <mat-divider></mat-divider>
       </li>
     </ul>
     <mat-paginator [length]="length"

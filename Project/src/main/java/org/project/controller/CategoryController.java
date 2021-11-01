@@ -1,7 +1,7 @@
 package org.project.controller;
 
 import org.project.dto.CategoryDto;
-import org.project.dto.mapper.SimpleDtoEntityMapper;
+import org.project.mapper.SimpleDtoEntityMapper;
 import org.project.model.Category;
 import org.project.service.CategoryService;
 import org.project.enums.PageSize;

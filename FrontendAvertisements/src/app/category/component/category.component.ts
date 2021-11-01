@@ -7,6 +7,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {DialogComponent} from "../../dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {LoginService} from "../../services/login.service";
+import {StringCutter} from "../../Util/string-cutter";
 
 @Component({
   selector: "category-name",
@@ -81,4 +82,8 @@ export class CategoryComponent implements OnInit{
     this.getCategories();
   }
 
+
+  descriptionCutter(description:string): string {
+    return StringCutter.descriptionCutter(description);
+  }
 }

@@ -1,7 +1,8 @@
 <form [formGroup]="updateForm">
   <mat-form-field appearance="fill">
     <mat-label>Change your comment: </mat-label>
-    <textarea matInput formControlName="text"></textarea>
+    <textarea matInput formControlName="text" [maxLength]="maxLength"></textarea>
+    <mat-hint>Characters remaining: {{text?.value?.length}}/{{maxLength}}</mat-hint>
   </mat-form-field>
   <br/>
   <input class="mat-raised-button mat-primary" type="submit" value="Update" [mat-dialog-close]="this.updateForm.value">

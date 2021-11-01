@@ -1,7 +1,8 @@
 package org.project.controller;
 
 import org.project.dto.AuthorDto;
-import org.project.dto.mapper.SimpleDtoEntityMapper;
+import org.project.mapper.SimpleDtoEntityMapper;
+import org.project.mapper.mapstruct.AuthorDtoMapper;
 import org.project.model.Author;
 import org.project.service.AuthorService;
 import org.project.enums.PageSize;
@@ -25,26 +26,29 @@ public class AuthorController {
 
     private final AuthorService authorService;
     private final SimpleDtoEntityMapper<Author, AuthorDto> dtoMapper;
+    private final AuthorDtoMapper authorDtoMapper;
 
     @Autowired
     public AuthorController(AuthorService authorService,
-                            SimpleDtoEntityMapper<Author, AuthorDto> dtoMapper) {
+                            SimpleDtoEntityMapper<Author, AuthorDto> dtoMapper,
+                            AuthorDtoMapper authorDtoMapper) {
         this.authorService = authorService;
         this.dtoMapper =dtoMapper;
+        this.authorDtoMapper =authorDtoMapper;
     }
 
     @PostMapping(ADD)
     public ResponseEntity<AuthorDto> insert(@RequestBody AuthorDto authorDto) {
-        Author author = dtoMapper.mapToEntity(authorDto);
+        Author author = authorDtoMapper.toAuthorEntity(authorDto);
         author = authorService.create(author);
-        authorDto = dtoMapper.mapToDto(author);
+        authorDto = authorDtoMapper.toAuthorDto(author);
         return ResponseEntity.ok(authorDto);
     }
 
     @GetMapping(ID)
     public ResponseEntity<AuthorDto> getById(@PathVariable long id) {
         Author author = authorService.readById(id);
-        AuthorDto authorDto = dtoMapper.mapToDto(author);
+        AuthorDto authorDto = authorDtoMapper.toAuthorDto(author);
         return ResponseEntity.ok(authorDto);
     }
 
@@ -112,7 +116,7 @@ public class AuthorController {
     }
 
     @PostMapping(CHECK)
-    public ResponseEntity<Boolean> isIdentical(@RequestBody Author author) {
+    public ResponseEntity<Boolean> isIdentical(@RequestBody AuthorDto author) {
         return ResponseEntity.ok(authorService.isIdentical(author.getPassword(),author.getId()));
     }
 }

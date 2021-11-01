@@ -1,7 +1,7 @@
 package org.project.controller;
 
 import org.project.dto.CommentDto;
-import org.project.dto.mapper.impl.CommentDtoMapper;
+import org.project.mapper.impl.CommentDtoMapper;
 import org.project.model.Comment;
 import org.project.service.AdvertisementService;
 import org.project.service.AuthorService;

@@ -12,20 +12,21 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class CommentUpdateComponent implements OnInit {
   title?: string;
   message?: string;
+  maxLength = 300;
 
 
   updateForm = new FormGroup({
     text: new FormControl(''),
     createDate: new FormControl(''),
     id: new FormControl(''),
-    author: new FormControl(''),
-    advertisement: new FormControl(''),
+    authorId: new FormControl(''),
+    advertisementId: new FormControl(''),
+    fullName: new FormControl('')
   });
 
 
   constructor(public dialogRef: MatDialogRef<CommentUpdateComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: Comment,
-              private commentService: CommentService) { }
+              @Inject(MAT_DIALOG_DATA) public data: Comment) { }
 
   ngOnInit(): void {
     this.getComment();
@@ -35,4 +36,7 @@ export class CommentUpdateComponent implements OnInit {
       this.updateForm.setValue(this.data);
   }
 
+  get text() {
+    return this.updateForm.get('text');
+  }
 }

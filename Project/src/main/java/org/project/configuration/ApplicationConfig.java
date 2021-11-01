@@ -14,8 +14,12 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScans(value = {@ComponentScan("org.project.repository"), @ComponentScan("org.project.service"),
-        @ComponentScan("org.project.configuration"),@ComponentScan("org.project.dto")})
+@ComponentScans(value = {
+        @ComponentScan("org.project.repository"),
+        @ComponentScan("org.project.service"),
+        @ComponentScan("org.project.configuration"),
+        @ComponentScan("org.project.dto"),
+        @ComponentScan("org.project.mapper")})
 @PropertySource("classpath:hibernate.properties")
 public class ApplicationConfig {
 

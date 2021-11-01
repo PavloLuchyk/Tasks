@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CommentDto {
-    private long id;
+    private Long id;
 
     @NotBlank(message = "The 'text' cannot be empty")
     private String text;
